@@ -1,0 +1,430 @@
+var FormIndikatorInduk = function () {
+
+	//INIT LOADING
+	var loading = false;
+	var loadingFormElement = $('.loading-form');
+	var id = $('#idKelas').val();
+	var meta = $('#metaKelas').val();
+	var idMapel = $('#idMapel').val();
+	var idKompetensi = $('#idKompetensi').val();
+	var idIndikatorInduk = $('#idIndikatorInduk').val();
+	var metaMapel = $('#metaMapel').val();
+	var idIndikator = $('#idIndikator').val();
+
+	//INIT FORM
+	var formIndikatorIndukElement = $('#form-indikator');
+	var kelasElement = $('#kelas_id');
+	var mapelElement = $('#mapel_id');
+	var kompetensiElement = $('#kompetensi_id');
+	var indikatorIndukElement = $('#indikator_induk_id');
+	var indikatorElement = $('#indikator');
+
+	var kelas_id, mapel_id, kompetensi_id, indikator_induk_id, indikator;
+
+	var urlUpdateApi = base_url_api + "/IndikatorApi/update";
+	var urlGetKelasApi = base_url_api + "/KelasApi/getAll";
+	var urlGetMapelApi = base_url_api + "/MapelApi/getAllByKelas";
+	var urlGetKompetensiApi = base_url_api + "/KompetensiApi/getAllByMapel";
+	var urlGetIndikatorIndukApi = base_url_api + "/IndikatorIndukApi/getAllByKompetensi";
+	var urlDetailApi = base_url_api + "/IndikatorApi/detail/";
+
+	var initValidation = function () {
+		formIndikatorIndukElement.validate({
+			errorClass: 'validation-message text-danger',
+			errorElement: 'div',
+			ignore: [],
+			errorPlacement: function (error, e) {
+				jQuery(e).parents('.form-group').append(error);
+			},
+			highlight: function (e) {
+				jQuery(e).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			success: function (e) {
+				jQuery(e).closest('.form-group').removeClass('has-error').addClass('has-success');
+				jQuery(e).remove();
+			},
+			rules: {
+				'indikator_induk': {
+					required: true,
+				},
+				'kelas_id': {
+					required: true,
+				},
+				'mapel_id': {
+					required: true,
+				},
+				'kompetensi_id': {
+					required: true,
+				}
+			},
+			messages: {
+				'indikator_induk': {
+					required: 'Indikator Induk Harus Di Isi',
+				},
+				'kelas_id': {
+					required: 'Kelas Harus Di Pilih',
+				},
+				'mapel_id': {
+					required: 'Mata Pelajaran Harus Di Pilih',
+				},
+				'kompetensi_id': {
+					required: 'Kompetensi Harus Di Pilih',
+				}
+			}
+		});
+	};
+
+	formIndikatorIndukElement.submit(function (event) {
+		event.preventDefault();
+		var valid = formIndikatorIndukElement.valid();
+
+		if (!loading) {
+			loading = true;
+			if (valid) {
+				loadingFormElement.show();
+
+				var formData = new FormData(formIndikatorIndukElement[0]);
+				var request = $.ajax({
+					url: urlUpdateApi,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false
+				});
+
+				request.done(function (xhr, status, error) {
+					if (xhr.success) {
+						toastr["success"]("Sukses", "Berhasil Menyimpan Data");
+						setTimeout(function () {
+							var meta_link = kompetensiElement.val();
+							$.redirect(base_url + 'back/indikator/' + idIndikatorInduk, null, 'GET');
+							resetForm();
+
+						}, 1500);
+					} else {
+						toastr["error"]("Gagal", "Gagal Menyimpan Data");
+					}
+				});
+
+				request.always(function (xhr, status, error) {
+					loading = false;
+					loadingFormElement.hide();
+				});
+
+				request.fail(function (xhr, status, error) {
+					$('.validation-message').remove();
+					var errorForm = [];
+
+					if (xhr.status == 422) {
+						var result = xhr.responseJSON;
+
+						$.each(result.form, function (index, value) {
+							errorForm.push(index);
+							var e = $("#" + index);
+							$(e).parents('.form-group').removeClass('has-success').addClass('has-error');
+							var error = "<div class='validation-message text-danger'><i class=\"fa fa-close\"></i> " + value + "</div>";
+							$(e).parents('.form-group').append(error);
+						});
+
+					}
+
+					for (var pair of formData.entries()) {
+						if (errorForm.indexOf(pair[0]) == -1) {
+							$("#" + pair[0] + " + .form-control-feedback").remove();
+							var e = $("#" + pair[0]);
+							$(e).parents('.form-group').addClass('has-success').removeClass('has-error');
+							var error = "<div class='validation-message text-success'><i class=\"fa fa-check\"></i> Valid</div>";
+							$(e).parents('.form-group').append(error);
+						}
+					}
+
+					if (xhr.status != 422) {
+						if (!xhr.success) {
+							toastr['error']('Server Error', xhr.message);
+						} else {
+							toastr['error']('Server Bermasalah', 'Terjadi Kesalahan Jaringan');
+						}
+					}
+
+				});
+
+			} else {
+				loading = false;
+			}
+		}
+	});
+
+	var resetForm = function () {
+		initValidation();
+		formIndikatorIndukElement[0].reset();
+		indikatorElement.html(indikator);
+
+		indikatorIndukElement.val(indikator_induk_id).trigger("change");
+		kelasElement.val(kelas_id).trigger('change');
+		mapelElement.val(mapel_id).trigger('change');
+		kompetensiElement.val(kompetensi_id).trigger('change');
+	};
+
+	var requestGetKelas = function () {
+		if (!loading) {
+			loading = true;
+
+			var request = jQuery.ajax({
+				url: urlGetKelasApi,
+				method: "GET",
+				beforeSend: function (xhr) {
+					loadingFormElement.show()
+				}
+			});
+
+			request.always(function (xhr, status, error) {
+				loading = false;
+				loadingFormElement.hide();
+			});
+
+			request.done(function (xhr, status, error) {
+
+				let option = new Option('Pilih Kelas', '', false, false);
+				kelasElement.append(option);
+
+				$.each(xhr.data, function (index, value) {
+
+					let selected = false;
+					if (value.id_kelas == id) {
+						selected = true;
+					}
+
+					option = new Option(value.nama_kelas, value.id_kelas, selected, selected);
+					option.setAttribute("data-meta", value.meta_link_kelas);
+					kelasElement.append(option);
+				});
+
+				loading = false;
+				kelasElement.val(id).trigger('change');
+				// requestGetMapel();
+
+			});
+
+			request.fail(function (jqXHR, textStatus) {
+				loading = false;
+				toastr["error"]("Terjadi Kesalahan");
+				loadingFormElement.hide();
+			});
+		}
+	};
+
+	kelasElement.change(function () {
+		if (kelasElement.val() != "") {
+			requestGetMapel();
+		}
+	});
+
+	var requestGetMapel = function () {
+		if (!loading) {
+			loading = true;
+
+			var request = jQuery.ajax({
+				url: urlGetMapelApi + "/" + kelasElement.val(),
+				method: "GET",
+				beforeSend: function (xhr) {
+					loadingFormElement.show()
+				}
+			});
+
+			request.always(function (xhr, status, error) {
+				loading = false;
+				loadingFormElement.hide();
+			});
+
+			request.done(function (xhr, status, error) {
+				mapelElement.empty();
+				let option = new Option('Pilih Mata Pelajaran', '', false, false);
+				mapelElement.append(option);
+
+				$.each(xhr.data, function (index, value) {
+
+					let selected = false;
+					if (value.id_mapel == idMapel) {
+						selected = true;
+					}
+
+					option = new Option(value.nama_mapel, value.id_mapel, selected, selected);
+					option.setAttribute("data-meta", value.meta_link_mapel);
+					mapelElement.append(option);
+				});
+
+				mapelElement.val(idMapel).trigger('change');
+
+			});
+			request.fail(function (jqXHR, textStatus) {
+				loading = false;
+				toastr["error"]("Terjadi Kesalahan");
+				loadingFormElement.hide();
+			});
+		}
+	};
+
+	mapelElement.change(function () {
+		if (mapelElement.val() != "") {
+			requestGetKompetensi();
+		}
+	});
+
+	var requestGetKompetensi = function () {
+		if (!loading) {
+			loading = true;
+
+			var request = jQuery.ajax({
+				url: urlGetKompetensiApi + "/" + mapelElement.val(),
+				method: "GET",
+				beforeSend: function (xhr) {
+					loadingFormElement.show()
+				}
+			});
+
+			request.always(function (xhr, status, error) {
+				loading = false;
+				loadingFormElement.hide();
+			});
+
+			request.done(function (xhr, status, error) {
+				kompetensiElement.empty();
+				let option = new Option('Pilih Kompetensi', '', false, false);
+				kompetensiElement.append(option);
+
+				$.each(xhr.data, function (index, value) {
+
+					let selected = false;
+					if (value.id_kompetensi == idKompetensi) {
+						selected = true;
+					}
+
+					option = new Option(value.kompetensi, value.id_kompetensi, selected, selected);
+					kompetensiElement.append(option);
+				});
+
+				kompetensiElement.val(idKompetensi).trigger('change');
+
+			});
+			request.fail(function (jqXHR, textStatus) {
+				loading = false;
+				toastr["error"]("Terjadi Kesalahan");
+				loadingFormElement.hide();
+			});
+		}
+	};
+
+	kompetensiElement.change(function () {
+		if (kompetensiElement.val() != "") {
+			requestGetIndikatorInduk();
+		}
+	});
+
+	var requestGetIndikatorInduk = function () {
+		if (!loading) {
+			loading = true;
+
+			var request = jQuery.ajax({
+				url: urlGetIndikatorIndukApi + "/" + kompetensiElement.val(),
+				method: "GET",
+				beforeSend: function (xhr) {
+					loadingFormElement.show()
+				}
+			});
+
+			request.always(function (xhr, status, error) {
+				loading = false;
+				loadingFormElement.hide();
+			});
+
+			request.done(function (xhr, status, error) {
+				indikatorIndukElement.empty();
+				let option = new Option('Pilih Indikator Induk', '', false, false);
+				indikatorIndukElement.append(option);
+
+				$.each(xhr.data, function (index, value) {
+					let selected = false;
+
+
+					if (value.id_indikator_induk == idIndikatorInduk) {
+						selected = true;
+					}
+
+					option = new Option(value.indikator_induk, value.id_indikator_induk, selected, selected);
+					indikatorIndukElement.append(option);
+				});
+
+			});
+			request.fail(function (jqXHR, textStatus) {
+				loading = false;
+				toastr["error"]("Terjadi Kesalahan");
+				loadingFormElement.hide();
+			});
+		}
+	};
+
+	var detailOpen = function () {
+
+		if (!loading) {
+			loading = true;
+
+			var request = jQuery.ajax({
+				url: urlDetailApi + idIndikator,
+				method: "GET",
+				beforeSend: function (xhr) {
+					loadingFormElement.show();
+				}
+			});
+
+			request.always(function (xhr, status, error) {
+				loading = false;
+				loadingFormElement.hide();
+			});
+
+			request.done(function (xhr, status, error) {
+				kompetensi = xhr.data.kompetensi;
+				kelas_id = xhr.data.kelas_id;
+				mapel_id = xhr.data.mapel_id;
+				kompetensi_id = xhr.data.kompetensi_id;
+				indikator_induk_id = xhr.data.indikator_induk_id;
+				indikator = xhr.data.indikator;
+
+				indikatorElement.html(indikator);
+
+				indikatorIndukElement.val(indikator_induk_id).trigger("change");
+				kelasElement.val(kelas_id).trigger('change');
+				mapelElement.val(mapel_id).trigger('change');
+				kompetensiElement.val(kompetensi_id).trigger('change');
+
+				loading = false;
+				requestGetKelas();
+
+
+			});
+
+			request.fail(function (jqXHR, textStatus) {
+				loading = false;
+				toastr["error"]("Terjadi Kesalahan");
+				loadingFormElement.hide();
+			});
+
+
+		}
+	};
+
+	return {
+		init: function () {
+			initValidation();
+			$(".select2").select2();
+			loadingFormElement.hide();
+			detailOpen();
+		}
+	}
+
+}();
+
+// Initialize when page loads
+jQuery(function () {
+	FormIndikatorInduk.init();
+});
+

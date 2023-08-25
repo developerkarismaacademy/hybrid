@@ -1,0 +1,5 @@
+{"id":"6231465a69775be2c572fc57","external_id":"KARISMAACADEMY00000904","user_id":"60e65d9df6d69c40fdb0f8fc","is_high":false,"payment_method":"BANK_TRANSFER","status":"PAID","merchant_name":"Karisma Academy","amount":400000,"paid_amount":400000,"bank_code":"BRI","paid_at":"2022-03-16T02:08:47.000Z","payer_email":"wandamaulanamalik@gmail.com","description":"Beli Mudah Merencanakan & Menghitung RAB dengan Excel Di Karisma Academy","adjusted_received_amount":395050,"fees_paid_amount":4950,"success_redirect_url":"https:\/\/www.hybrid.karismaacademy.com\/konfirmasi\/904","created":"2022-03-16T02:07:23.912Z","updated":"2022-03-16T02:08:48.100Z","currency":"IDR","initial_amount":400000,"payment_channel":"BRI","payment_destination":"9200137240916445"}
+
+
+
+halo bang

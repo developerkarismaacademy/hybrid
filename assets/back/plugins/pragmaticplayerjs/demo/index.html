@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" dir="ltr" itemscope itemtype="http://schema.org/Article">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>PragmaticPlayer.Js</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="shortcut icon" href="./assets/favicon.ico"/>
+	<link rel="icon" href="./assets/favicon.ico" type="image/ico">
+	<link rel="stylesheet" type="text/css" href="../pplayer/assets/pplayer.css"/>
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+<header role="banner">
+	<div>
+		<hgroup>
+			<h1>PragmaticPlayer.Js</h1>
+			<h2>Easy-to-customize responsive player for embedded Youtube or HTML5 videos</h2>
+		</hgroup>
+		<a class="fork" href="https://github.com/dsheiko/PragmaticPlayerJs">Fork Me on GitHub</a>
+	</div>
+</header>
+<section role="main">
+	<div>
+		<article>
+			<h2>Introduction</h2>
+			<p>This player has adapters for Youtube and HTML video APIs. So you can use it as customizable Youtube
+				player or as HTML video player with fallback to Youtube player if the user browser doesn't support HTML5
+				video element.</p>
+			<p>
+				The player is aware of the vandalic way <a href="http://www.divx.com/">DivX</a> embeds its own web
+				player when installed, and tries to fix it gratefully.
+			</p>
+		</article>
+		<article>
+			<h2>Youtube Custom Player Demo</h2>
+			<div id="youtube-video"><!-- --></div>
+		</article>
+
+
+		</article>
+
+
+		<div class="download">
+			<a class="btn btn-inverse btn-large" href="https://github.com/dsheiko/PragmaticPlayerJs">Download the latest
+				version from GitHub</a>
+		</div>
+	</div>
+</section>
+<footer>
+	<article>
+		<p><var>PragaticPlayer.Js</var> is created by <a href="http://dsheiko.com">Dmitry Sheiko</a>.
+			It's released under the <a href="http://opensource.org/licenses/mit-license.php/">MIT</a> license. </p>
+		<p>
+			The <a href="http://www.bigbuckbunny.org">"Big Buck Bunny"</a> movie used in this example created by <a
+				href="http://www.bigbuckbunny.org">Blender Foundation</a> and licensed under the <a
+				href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a> license.
+		</p>
+		<p>If you have any questions or feedback you can use the <a href="https://github.com/dsheiko/PragmaticPlayerJs">project
+			page.</a>
+		</p>
+	</article>
+</footer>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="../pplayer/js/jquery.pplayer.js"></script>
+<script type="text/javascript">
+	$(document).on("ready", function () {
+		$("#youtube-video").pPlayer({
+			youtubeVideoId: "SZ_UJqxSUCU",
+			autoplay: 0,
+			features: ["playpause", "progress", "quality", "timer", "mute", "fullscreen"]
+		});
+		$("#html5-video").pPlayer({
+			youtubeVideoId: "SZ_UJqxSUCU",
+			autoplay: 0
+		});
+	});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+
+@media (max-width: 1200px) {
+	#kuis-nilai {
+		font-size: 25px !important;
+    }
+
+    
+    .bg-prakerja-guide{
+        border-radius: 13px;
+        background: url('../img/bg-robo.png'); 
+        background-repeat: no-repeat;
+        height: 360px;
+        background-size: cover;
+    }
+
+}
+@media (max-width: 992px) {
+    #footer .col-md-12{
+        text-align:center;
+    }
+
+    .navbar .dropdown-menu{
+        border:none !important;
+    }
+
+    #login .login-banner{
+        background-blend-mode: multiply;
+        background-color:rgba(15, 8, 8, 0.5);
+    }
+    
+    .kelas-parent .card-title .title-sub{
+        margin:0 !important;
+        padding:0;
+    }
+
+	#kuis-nilai {
+		font-size: 18px !important;
+    }
+
+     
+}
+@media (max-width: 768px) {
+    
+    .kelas-parent .list-kelas {
+        height: auto;
+    }
+    
+	#kuis-nilai {
+		font-size: 3vw !important;
+    }
+
+    #pilih-kelas .kelas-list .slick-prev,
+    #pilih-kelas .kelas-list .slick-next{
+        display:inline-block !important;
+    }
+
+    #pilih-kelas .slick-slide {
+        margin:0;
+    }
+    #pilih-kelas .kelas-item{
+        padding:0 !important;
+    }
+    #pilih-kelas .kelas-item .card{
+        width:100%;
+    }
+
+    #profil .tab-pane,
+    #profil .tab-pane > .container .col{
+        padding:0;
+    }
+    #login > .container{
+        max-width:100%;
+        width:100%;
+        padding:0;
+        margin:0;
+    }
+    #login .login-row{
+        width:100%;
+        margin:0;
+    }
+    #login .login-banner,
+    #login  .login-main .nav-pills,
+    #login  .login-main .tab-content{
+        padding:10px 20px;
+    }
+    #login .login-brand{
+        text-align:left;
+        display:inline-block;
+    }
+    #login .login-brand > .brand-logo {
+        margin-right:auto;
+    }
+    #login .login-row{
+        min-width: 100%;
+        min-height: 100%;
+    }
+    .img-float-pc{
+        width:90px; 
+        height:90px; 
+        position: absolute;
+        left: 160px;
+	}
+
+	.img-float-cs{ 
+		bottom: -30px ;
+		margin-left:100px;
+		width: 100px; 
+		height: 90px;
+		position: absolute;
+	}
+}
+@media (max-width: 767px) and (min-width: 576px){
+    #footer .container .row .col-md-12{
+        text-align:center;
+    }
+}
+
+@media (max-width: 576px){
+        
+    .navbar-brand .brand {
+        width:100px;
+    }
+
+    [class*="line-limit-"] {
+       height:initial;
+    }
+
+    #paket .card-body .card-title > .title-main{
+        font-size:35px;
+    }
+    #btn-dokumen{
+        width:50%;
+    }
+    #jumbotron{
+        background-position: center 200px;
+        text-align:center;
+    }
+    #jumbotron .heading-jumbotron{
+        font-size: 38px;
+    }
+    
+    #jumbotron .btn-coba {
+        padding: 10px 0;
+        width:100%;
+    }
+    
+}
+
+
+@media (min-width:992px){
+    #login .login-banner{
+        border-radius:20px 0 0 20px;
+    }
+    .login-banner > div{
+        transform:translateY(10%);
+    }
+}
+
+
+
+/* *************** */
+/*                 */
+/*   Bootstrap 5   */ 
+/*                 */
+/* *************** */ 
+
+@media (min-width: 320px) { 
+   	body {
+			font-family: "Open Sans", sans-serif;
+		}
+
+		.carousel {
+			margin: 0 auto;
+			padding: 0 70px;
+		}
+
+		.carousel .item {
+			color: #999;
+			overflow: hidden;
+			min-height: 120px;
+			font-size: 13px;
+		}
+
+		.carousel .media {
+			position: relative;
+			padding: 0 0 0 20px;
+		}
+
+		.carousel .media img {
+			width: 75px;
+			height: 75px;
+			display: block;
+			border-radius: 50%;
+		}
+
+		.carousel .testimonial-wrapper {
+			padding: 0 10px;
+		}
+
+		.carousel .testimonial {
+			color: #808080;
+			position: relative;
+			padding: 15px;
+			background: #f1f1f1;
+			border: 1px solid #efefef;
+			border-radius: 3px;
+			margin-bottom: 15px;
+		}
+
+		.carousel .testimonial::after {
+			content: "";
+			width: 68px;
+			height: 17px;
+			display: block;
+			background: #f1f1f1;
+			border: 1px solid #efefef;
+			border-width: 0 0 1px 1px;
+			position: absolute;
+			top: -10px;
+			left: 46px;
+			transform: rotateZ(13deg);
+		}
+
+		.carousel .star-rating li {
+			padding: 0 2px;
+		}
+
+		.carousel .star-rating i {
+			font-size: 1.3em;
+			color: #FFA737;
+		}
+
+		.carousel .overview {
+			padding: 3px 0 0 15px;
+		}
+
+		.carousel .overview .details {
+			padding: 5px 0 8px;
+		}
+
+		.carousel .overview b {
+			text-transform: uppercase;
+			color: var(--main-orange-color);
+		}
+
+		.carousel .carousel-indicators {
+			bottom: -70px;
+		}
+
+		.carousel-indicators li,
+		.carousel-indicators li.active {
+			width: 20px;
+			height: 1px;
+			margin: 1px 2px;
+		}
+
+		.carousel-indicators li {
+			height: 1px;
+			background: #D0DCEF;
+			border: 1px solid var(--main-orange-color);
+		}
+
+		.carousel-indicators li.active {
+			color: var(--main-orange-color);
+			background: var(--main-orange-color);
+		}
+
+        .img-float-pc{
+            width:90px; 
+            height:90px; 
+            position: absolute;
+            left: 60px;
+        }
+
+        .img-float-cs{ 
+            bottom: -30px ;
+            margin-left: 180px;
+            width: 100px; 
+            height: 90px;   
+            position: absolute;
+        }
+
+        .font-guide{
+            font-size: 1em;
+        }
+
+                
+        .bg-prakerja-page{
+            background: url('../img/bg-prakerja-page.png');
+            height: 53vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+ 
+        .font-bg-prakerja{ 
+            height: 60px;
+            font-size: 1.5em; 
+        }
+
+        .font-bg-coupon{
+            font-size: 1em; 
+        } 
+
+        .btn-use-coupon{
+            border-radius: 28px;
+            width: 51%;
+            font-size: .8em;
+            align-items : center;
+            justify-content: space-around;
+        }
+
+        .btn-check-coupon{
+            border-radius: 28px;
+            width: 44%;
+            font-size: .8em;
+            align-items : center;
+            justify-content: space-around;
+        }
+
+        .bg-prakerja img{
+            width : 18px;
+        }
+
+                
+        .bg-prakerja-guide{
+            border-radius: 13px;
+            background: url('../img/bg-robo.png'); 
+            background-repeat: no-repeat;
+            height: 110px;
+            background-size: cover;
+        }
+
+        .bg-prakerja-2{ 
+            height: 270px;
+        } 
+
+        .btn-page-prakerja{
+            border-radius: 28px;
+            width:100%;
+            font-size: 1em;  
+            align-items : center;
+            justify-content: space-around;
+        }
+
+        .img-ikarisma{
+            width: 90px;
+        }
+ 
+}
+@media (min-width: 768px)  {  
+
+    .font-guide{
+        font-size: x-large;
+    }
+
+    .img-float-pc{
+        width:90px; 
+        height:90px; 
+        position: absolute;
+        left: 160px;
+	}
+
+	.img-float-cs{ 
+		bottom: -30px ;
+		margin-left: 300px;
+		width: 100px; 
+		height: 90px;
+		position: absolute;
+	} 
+
+    .font-guide{
+        font-size: 2em;
+    } 
+
+    .bg-prakerja-page{
+        background: url('../img/bg-prakerja-page.png');
+        height: 420px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .font-bg-prakerja{ 
+        height: 160px;
+        font-size: 3em; 
+    }
+
+    .font-bg-coupon{
+        font-size: 2em; 
+    } 
+
+    .btn-use-coupon{
+        border-radius: 28px;
+        width: 51%;
+        font-size: 1.4em;  
+        align-items : center;
+        justify-content: space-around;
+    }
+
+    .btn-check-coupon{
+        border-radius: 28px;
+        width: 44%;
+        font-size: 1.4em;  
+        align-items : center;
+        justify-content: space-around;
+    }
+
+    .bg-prakerja img{
+        width : 40px;
+    }
+
+            
+    .bg-prakerja-guide{
+        border-radius: 13px;
+        background: url('../img/bg-robo.png'); 
+        background-repeat: no-repeat;
+        height: 200px;
+        background-size: cover;
+    }
+
+    
+    .bg-prakerja-2{ 
+        height: 220px;
+    }
+
+    .btn-page-prakerja{
+        border-radius: 28px;
+        width: 30%;
+        font-size: 1em;  
+        align-items : center;
+        justify-content: space-around;
+    }
+
+}
+ 
+@media (min-width: 890px) {
+
+     .img-float-pc{
+        width:90px; 
+        height:90px; 
+        position: absolute;
+        left:  160px;
+	}
+
+	.img-float-cs{ 
+		bottom: -30px ;
+		margin-left: 300px;
+		width: 100px; 
+		height: 90px;
+		position: absolute;
+	} 
+    
+}
+
+@media (min-width: 992px)  { 
+     .img-float-pc{
+        width:90px; 
+        height:90px; 
+        position: absolute;
+        left:  0px;
+	}
+
+	.img-float-cs{ 
+		bottom: 30px ;
+		margin-left:200px;
+		width: 100px; 
+		height: 90px;
+		position: absolute;
+	}
+
+    .btn-use-coupon{
+        border-radius: 28px;
+        width: 25%;
+        font-size: 1.4em;  
+        align-items : center;
+        justify-content: space-around;
+    }
+
+    .btn-check-coupon{
+        border-radius: 28px;
+        width: 25%;
+        font-size: 1.4em;  
+        align-items : center;
+        justify-content: space-around;
+    } 
+            
+    .bg-prakerja-guide{
+        border-radius: 13px;
+        background: url('../img/bg-robo.png'); 
+        background-repeat: no-repeat;
+        height: 310px;
+        background-size: cover;
+    }
+
+ }

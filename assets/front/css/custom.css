@@ -1,0 +1,77 @@
+body>div.container {
+	padding: 30px 0;
+}
+
+.navbar {
+	padding: 0;
+}
+
+.navbar-nav .nav-link {
+	color: #AAA;
+	transition: all .2s linear;
+	margin: 0 5px;
+	font-weight: 600;
+}
+
+.navbar-nav .nav-link:hover {
+	color: #FFF;
+}
+
+.navbar-nav>li>.dropdown-menu {
+	margin-top: 11px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.dropdown-menu .dropdown-item {
+	padding: 0 15px 0 15px;
+	height: 35px;
+	line-height: 35px;
+	font-weight: normal;
+	transition: all 0.1s linear;
+}
+
+.dropdown-menu .dropdown-item:hover {
+	background: #10171d;
+	color: #FFF;
+}
+
+.btn {
+	border-radius: 25px;
+}
+
+
+img.object-cover {
+	object-fit: cover;
+}
+
+.mCSB_inside>.mCSB_container {
+	margin-right: 20px;
+}
+
+#gg-login-button div {
+	border-radius: 100px;
+}
+
+#fb-login-button .fab {
+	color: #3B5998;
+	width: 35px;
+	font-size: 25px;
+	border-radius: 100%;
+	background: white;
+	padding: 5px 0;
+}
+
+.modal-quiz .modal-body {
+	background: white;
+}
+
+.jawaban .mCustomScrollBox {
+	width: 100%;
+}
+
+.jawaban .mCSB_container input[type="radio"] {
+	position: absolute;
+	clip: rect(0, 0, 0, 0);
+	pointer-events: none;
+}

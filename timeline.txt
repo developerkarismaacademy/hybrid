@@ -1,0 +1,43 @@
+
+- 10 SOAL PRETEST
+- Menampilkan Hello World di DEVELOPER CONSOLE
+- Menampilkan ALERT di DEVELOPER CONSOLE
+- Membuat javascript di file HTML
+- Membuat file javascript eksternal
+- Mengaplikasikan fitur console.log
+- Mengaplikasikan fitur alert, prompt
+- Mengenal dan membuat variabel dan tipe data
+- Membuat Form Biodata dengan prompt dan menampilkan di console.log
+- Membuat if-else sederhana
+- Menampilkan angka dari 1 - 20 menggunakan perulangan
+- Membuat Array dan menampilkan dengan perulangan
+- Menampung TAG HTML di dalam VARIABEL
+- Memanipulasi CSS Element
+- Merubah Inner HTML
+- Merubah Attribute HTML
+- Mengaplikasi event Element HTML
+- Membuat function untuk menghitung luas
+- Membuat struktur HTML Kalkulator
+- Menambahkan design untuk kalkulator Dengan CSS
+- Memanggil semual element tombol dengan query selector
+- Memberi event pada tiap tombol
+- Membuat if-else untuk fungsi tombol
+
+
+Pretest
+
+INTRO JAVASCRIPT
+
+Mampu memanipulasi HTML menggunakan javascript
+
+Mampu Membuat Aplkasi Kalkulator
+
+
+
+Mampu mejalankan perintah sederhana di console
+
+Mampu Menghasilkan form biodata sederhana menggunakan console
+
+Mampu memanipulasi  HTML menggunakan javascript
+
+Mampu Membuat Aplkasi Kalkulator

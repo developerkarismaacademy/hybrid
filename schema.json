@@ -1,0 +1,19 @@
+{
+  "product": {
+	"aRsad": {
+	  "nama_product": "AYAM GEPREK DECOZZY",
+	  "harga": 15000,
+	  "kategori": "1,4,3"
+	}
+  },
+  "transaksi": {
+  },
+  "kategori": {
+	"nsi8KUidfwn": {
+		"nama_kategori" : "AYAM"
+	},
+	"asjdnasjYsa": {
+	  "nama_kategori" : "MINUMAN"
+	}
+  }
+}

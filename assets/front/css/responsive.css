@@ -1,0 +1,318 @@
+/* MIN media screen */
+@media (min-width: 1200px) {
+    .banner-home {
+        height: 50em;
+    }
+
+    .banner-home h1 {
+        font-size: 2.3em;
+    }
+}
+
+@media (min-width: 768px) {
+	/*HOME*/
+    .banner-home {
+        height: 30em;
+    }
+
+    .wrap-detail-materi > div:nth-child(1) {
+        padding: 0;
+	}
+
+}
+
+@media (min-width: 576px) {
+    .banner-home {
+        text-align: left;
+    }
+
+    .banner-home h1 {
+        margin: 0;
+    }
+
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .banner-home {
+        height: 30em;
+        text-align: left;
+    }
+
+    .banner-home h1 {
+        margin: 0;
+    }
+
+    .btn-group .btn {
+        font-size: 1em;
+    }
+
+}
+
+
+
+/* MAX media screen */
+@media (max-width: 1200px) {
+    .wrap-detail-materi > div:nth-child(1) img {
+        margin-left: -15px;
+    }
+}
+
+@media (max-width: 768px) {
+    /*HOME*/
+	.banner-home {
+        text-align:center;
+        height:30vh;
+	}
+	.banner-home .row h1{
+		margin:0 auto;
+	}
+
+	.banner-home h1 {
+		padding-top: initial;
+	}
+
+	.banner-home .img-logo {
+		width: 20%;
+		margin: 0 auto;
+		left: 0;
+		position: initial;
+	}
+
+	.home-materi-list h1:first-child {
+		margin-top: 20px;
+	}
+
+	.section-abu {
+		padding-top: 20px;
+	}
+	/*Update*/
+
+    .banner-materi h1 {
+        text-align: center;
+        font-size: 30px;
+        font-weight: normal;
+    }
+
+    .banner-materi h3 {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .banner-top {
+        padding: 20px 0;
+    }
+	.banner-top .banner-left,
+	.banner-top .banner-right {
+		text-align: center;
+		width: 100%;
+		margin:0 auto;
+	}
+    .banner-top .banner-right a,
+    .banner-bottom .banner-right a {
+		margin-top: 15px;
+		width:100%;
+    }
+
+    .banner-materi span:not(.badge) {
+        text-align: center;
+        display: block;
+    }
+
+    .banner-top .banner-right h4,
+    .banner-bottom .banner-right h4,
+    .banner-top .banner-right h3,
+    .banner-bottom .banner-right h3 {
+        display: inline-block;
+        position: absolute;
+        left: 30px;
+        margin-top: 15px;
+    }
+
+    .banner-top .banner-right h4,
+    .banner-bottom .banner-right h4 {
+        margin-top: 45px;
+    }
+
+    .banner-profil-siswa {
+        height: auto;
+    }
+
+    .banner-profil-siswa div.row {
+        height: auto;
+    }
+
+    .banner-profil-siswa .profil-foto {
+        position: inherit;
+    }
+
+    .banner-profil-siswa div.row div:nth-child(2) {
+        top: 0;
+    }
+
+    .banner-profil-siswa .btn-profil {
+        margin: 0;
+        width: 100%;
+    }
+
+    .accordion ul.card-body {
+        padding: 1rem;
+    }
+
+    .wrap-detail-materi > div:nth-child(1) img {
+        border: solid 2px #DDD;
+        margin-left: -20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .wrap-detail-materi > div:nth-child(1) {
+        text-align: center;
+
+    }
+
+    .soal-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #modal-soal {
+        padding-right: 0 !important;
+    }
+
+    #modal-soal .modal-dialog {
+        max-width: 100%;
+    }
+
+    .pertanyaan > div {
+        height: auto;
+        overflow: auto;
+    }
+
+    .wrap-selesai {
+        position: relative;
+        right: auto;
+        left: auto;
+        margin-top: -3px;
+        margin: 0 auto;
+    }
+
+    .banner-profil-siswa .profil-foto {
+        top: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 110px !important;
+        height: 110px;
+    }
+
+    .transaksi > .row > .col-md-7 {
+        margin-top: 20px;
+    }
+
+    /* Rapor */
+    .wrap-progress .progress {
+        margin-top: 0.2em;
+    }
+
+    .wrap-penjelasan .col-md-3 {
+        flex-direction: row;
+        align-items: baseline;
+    }
+    
+
+    .wrap-penjelasan .col-md-3 > div {
+        margin: 10px;
+    }
+	
+}
+
+
+@media (max-width: 960px) {
+    .btn-group {
+        display: flex;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+    }
+
+    .materi-lainnya {
+        margin-bottom: 20px;
+    }
+
+    .banner-profil-siswa .btn-profil {
+        display: block;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 575px) {
+    #materi-konten .badge-sesi + hr {
+        margin-top: 2rem;
+    }
+    .logo-footer {
+        width: 40px;
+        background-size: unset;
+    }
+
+    .wrap-deskripsi h1 {
+        font-size: 22px;
+    }
+
+    .wrap-deskripsi,
+    .wrap-deskripsi p {
+        font-size: 15px;
+    }
+
+    .accordion .card-body .row > .col-10 {
+        padding-left: 0;
+    }
+
+    .accordion .card-header {
+        height: 50px;
+        line-height: 50px;
+        font-size: 15px;
+    }
+
+    .accordion ul.card-body {
+        padding: 1rem;
+    }
+
+    .accordion ul.card-body li {
+        padding: 0 0 10px;
+        margin: 0 0 10px;
+    }
+
+    .accordion ul li > span {
+        height: 40px;
+        width: 40px;
+        line-height: 38px;
+        font-size: 16px;
+    }
+
+    .accordion ul li > p {
+        font-size: 14px;
+        margin: 0 0 0 10px;
+    }
+
+    .tentang-second .row > .col-12 {
+        margin-bottom: 20px;
+    }
+
+    .transaksi > .row {
+        margin: 0;
+    }
+
+    .transaksi > .row h3 {
+        font-size: 1.35rem;
+    }
+
+    .transaksi > .row .border-dark.rounded-circle {
+        width: 60px !important;
+        height: 60px !important;
+        background-size: cover !important;
+    }
+
+    .banner-profil-siswa .btn-profil {
+        margin-top: 10px;
+    }
+}

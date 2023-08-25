@@ -1,0 +1,897 @@
+@import url("https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+#footer ul li{
+  list-style-type: none;
+  color: white !important;
+  text-decoration: none !important;
+}
+
+#footer ul li a{
+  list-style-type: none;
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  margin-top: -3px;
+  padding: 0;
+  filter: invert(93%) sepia(93%) saturate(0%) hue-rotate(289deg)
+    brightness(106%) contrast(108%);
+}
+.active .icon {
+  filter: invert(0%) sepia(100%) saturate(7500%) hue-rotate(181deg)
+    brightness(108%) contrast(109%);
+}
+
+.bg-custom {
+  background: #13213b;
+}
+.form-control {
+  font-family: "Poppins";
+  font-weight: 400;
+  background: #efefef;
+  border-radius: 6px;
+  border-style: none;
+}
+.form-control:focus {
+  box-shadow: none;
+  font-family: "Poppins";
+  font-weight: 400;
+  background: #efefef;
+  border-radius: 6px;
+  border-color: #ffee32;
+}
+.form-control::placeholder {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 275;
+}
+
+.btn-primary {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 17px;
+  color: #ffffff;
+  background-color: #0da5de;
+  padding: 14px 20px;
+  border-radius: 6px;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #007eac;
+}
+.navbar-nav .nav-item .nav-link {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: capitalize;
+  color: #ffffff !important;
+}
+
+.navbar-nav .nav-item .btn {
+  padding: 10px 20px;
+}
+
+.dropdown-menu .dropdown-item {
+  text-transform: capitalize;
+  font-family: "Montserrat";
+}
+
+/* Section Banner */
+.section-banner {
+  background-image: url("../img/bg\ oren.png");
+  height: auto;
+  margin-top: 80px;
+  padding-bottom: 100px;
+}
+.section-banner .container {
+  padding: 50px 20px;
+}
+
+.section-banner .container a {
+  text-decoration: none;
+
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ffffff;
+}
+
+.section-banner .container .img-banner {
+  width: 744px;
+  margin-top: 34px;
+}
+
+.section-banner .container .desc {
+  width: 512px;
+
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 25px;
+  text-align: center;
+
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #fff;
+}
+
+.section-banner .container .custom-tabs {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 64px;
+  position: relative;
+}
+.section-banner .container .custom-tabs .nav-item .nav-link {
+  position: relative;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  z-index: 999;
+}
+.section-banner .container .custom-tabs .nav-item .nav-link.active {
+  background: none;
+  color: #000000;
+}
+
+.section-banner .container .custom-tabs .panel {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffee32;
+  border-radius: 3px;
+  cursor: pointer;
+  z-index: 0;
+  box-shadow: 2px 5px 20px rgba(206, 209, 14, 0.479);
+}
+
+.tab-content {
+  width: 906px;
+  margin-top: 44px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab-content .tab-slide {
+  display: none;
+  animation: moving 0.5s ease;
+}
+.tab-content .tab-pane.klaim {
+  border-radius: 12px;
+  width: 100%;
+  height: 292px;
+  background: #ffffff;
+  padding: 55px;
+}
+.tab-content .tab-pane.dapatkan {
+  border-radius: 12px;
+  width: 100%;
+  height: 292px;
+  background-color: #ffffff;
+  background-image: url("../img/bg-coin.png");
+  background-position: 110% 60%;
+  background-size: 414px;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.tab-content .tab-pane.dapatkan::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: 0;
+  opacity: 0.5;
+  border-radius: 12px;
+}
+.tab-content .tab-pane .content {
+  z-index: 1;
+  color: #000000;
+  position: relative;
+  text-align: left;
+  padding: 30px 56px;
+}
+.tab-content .tab-pane .content h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 37px;
+
+  color: #383838;
+}
+.tab-content .tab-pane .content p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+
+  color: #383838;
+}
+
+.tab-content .tab-pane.history {
+  border-radius: 12px;
+  width: 100%;
+  height: 292px;
+  background: #ffffff;
+  padding: 30px;
+}
+.tab-content .tab-pane.history .nav-link {
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #000000;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+
+  color: #383838;
+}
+.tab-content .tab-pane.history .nav-link.active {
+  background: none;
+  border-bottom: 3px solid #e6d51f;
+}
+.tab-content .tab-pane.active {
+  display: block;
+}
+.gold-info {
+  width: 254px;
+}
+.gold-info h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  text-align: left;
+  color: #383838;
+  margin-bottom: 0;
+  margin-left: 20px;
+}
+.gold-info p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  margin-top: -10px;
+  text-align: left;
+  color: #383838;
+  margin-left: 20px;
+}
+.klaim .footer {
+  text-align: left;
+}
+.klaim .info-img {
+  width: 64px;
+}
+.klaim .info-misi {
+  text-align: left;
+}
+.klaim .info-misi h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 37px;
+
+  color: #383838;
+  padding-top: 6px;
+  padding-left: 20px;
+}
+.klaim .info-misi p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  margin-top: -10px;
+  color: #383838;
+  padding-left: 20px;
+}
+.klaim .footer h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 37px;
+
+  color: #383838;
+  padding-top: 6px;
+  padding-left: 20px;
+}
+.klaim .footer p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  margin-top: -10px;
+  color: #383838;
+  padding-left: 20px;
+}
+.klaim .footer .btn-custom {
+  padding: 10px 30px;
+  border-radius: 12px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+
+  color: #ffffff;
+}
+.klaim .footer .button {
+  text-align: left;
+}
+.content-tukar {
+  width: 906px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+.content-tukar h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 37px;
+
+  color: #ffffff;
+  padding: 30px 0;
+}
+.content-tukar .card {
+  background: #ffffff;
+  box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.09);
+  border-radius: 12px;
+  padding: 0;
+  border: none;
+}
+.content-tukar .card img {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  object-fit: cover;
+  height: 100%;
+}
+.content-tukar .card .card-body {
+  padding: 20px 20px;
+}
+.content-tukar .card-body h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  color: #383838;
+  padding: 0;
+}
+.content-tukar .card-body .btn {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 29px;
+  /* identical to box height */
+  padding: 10px 18px;
+  color: #ffffff;
+}
+.content-tukar .card-body .btn img {
+  width: 26px;
+  margin-top: -6px;
+}
+
+.section-content {
+  background-image: url("../img/bg\ white.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100px;
+  border-top-right-radius: 42px;
+  border-top-left-radius: 42px;
+  margin-top: -50px;
+}
+
+.section-content .container {
+  width: 910px;
+}
+
+.section-content .card {
+  padding: 28px 44px;
+  border-radius: 12px;
+  margin-bottom: 82px;
+  border: 1px solid #000000;
+  text-align: center;
+  position: relative;
+}
+
+.section-content .card .card-body h1 {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 25px;
+  /* identical to box height */
+
+  color: #13213b;
+}
+
+.section-content .card .card-body p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+
+  color: #383838;
+}
+.section-content .non-table .number {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 60px;
+
+  color: #383838;
+  text-align: left;
+}
+.section-content .non-table .description {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #383838;
+  text-align: left;
+  padding-left: 10px;
+}
+.section-content .btn-card {
+  background-color: #f16b25;
+  min-width: 352px;
+  color: #ffffff;
+  padding: 12px 40px;
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 25px;
+  /* identical to box height */
+
+  color: #ffffff;
+
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.section-content .table thead tr,
+.section-content .table thead tr th,
+.section-content .table tbody tr,
+.section-content .table tbody tr td {
+  border: 1px solid #000000 !important;
+}
+.section-content .table thead tr th {
+  background-color: #0da5de;
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 21px;
+  /* identical to box height */
+
+  color: #ffffff;
+  text-align: center;
+  padding: 22px;
+}
+.section-content .table tbody tr td {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  color: #383838;
+}
+.section-content .table tbody tr td img {
+  width: 24px;
+  margin-right: 10px;
+}
+.tab-pane.history .tab-content {
+  max-height: 200px;
+  max-width: 95%;
+  overflow: auto;
+  overflow-x: hidden;
+  margin-top: 10px;
+}
+.tab-pane.history .tab-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.tab-pane.history .tab-content::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.tab-pane.history .tab-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #646464;
+}
+.gold-dapat img {
+  object-fit: cover;
+  height: 100%;
+}
+.gold-dapat h6 {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 18px;
+}
+.gold-dapat p {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 16px;
+  margin: 0;
+}
+.gold-dapat p img {
+  width: 32px;
+  margin-right: 8px;
+}
+.gold-tukar img {
+  object-fit: cover;
+  height: 100%;
+}
+.gold-tukar h6 {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 18px;
+}
+.gold-tukar p {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 16px;
+  margin: 0;
+}
+.gold-tukar p img {
+  width: 32px;
+  margin-right: 8px;
+}
+@keyframes moving {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+
+/*
+------------
+FOOTER
+------------
+*/
+.bg-ka-darker{
+  background-color: #24395D;
+  color: white;
+  padding: 2% 0;
+}
+
+#footer a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#footer .container > .row > [class*="col"] *:not([class*="fa"]):not(small) {
+  font-family: var(--main-font-roboto);
+  font-size: 14px;
+}
+
+#footer .container > .row > [class*="col"] small,
+#footer .container > .row > [class*="col"] small * {
+  font-size: 12px !important;
+}
+
+/*ICON*/
+
+.icon-footer {
+  padding-left: 20px;
+  background-size: 15px;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.icon-footer.icon-footer-big{
+  padding-left: 30px;
+  background-size: 30px;
+  height: 30px;
+}
+
+@media only screen and (min-width: 1200px) {
+  /* Styles for screens with a minimum width of 1200px */
+  .container {
+    padding: 0;
+    max-width: 1348px;
+  }
+  .navbar-nav .nav-item .nav-link {
+    margin-left: 50px;
+  }
+  .section-banner {
+    background-size: auto;
+    background-position: center top;
+  }
+  .section-content {
+    padding-top: 100px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for screens between 768px and 1199px in width */
+  .navbar-nav .nav-item .nav-link {
+    margin: 12px 0;
+  }
+  .navbar-toggler {
+    border: none;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 34px;
+  }
+  .section-banner {
+    padding-bottom: 50px;
+  }
+  .section-banner .container .custom-tabs {
+    width: auto;
+  }
+  .tab-content {
+    width: auto;
+  }
+  .gold-info h1 {
+    margin-top: -10px;
+  }
+  .klaim .footer img {
+    width: 60px;
+  }
+  .klaim .footer h1 {
+    font-size: 34px;
+  }
+  .content-tukar {
+    width: auto;
+  }
+  .content-tukar .card {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0;
+  }
+  .content-tukar .card-body .btn {
+    padding: 10px 30px;
+  }
+  .section-content {
+    padding-top: 80px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* Styles for screens with a maximum width of 767px */
+  .navbar-nav .nav-item .nav-link {
+    margin: 8px 0;
+  }
+  .navbar-toggler {
+    border: none;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 30px;
+  }
+  .section-banner {
+    margin-top: 50px;
+    background-size: auto;
+    background-position: center top;
+    padding-bottom: 30px;
+  }
+  .section-banner .container .img-banner {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .section-banner .container .desc {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+  .section-banner .container .custom-tabs {
+    width: 100%;
+    margin-top: 10px;
+    position: none;
+  }
+  .section-banner .container .custom-tabs .nav-link {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  .section-banner .container .custom-tabs .nav-link.active {
+    background-color: #ffee32;
+    color: #000000;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  .section-banner .container .custom-tabs .nav-link.hover {
+    background-color: #ffee32;
+    color: #000000;
+  }
+  .hover .icon {
+    filter: invert(0%) sepia(100%) saturate(7500%) hue-rotate(181deg)
+      brightness(108%) contrast(109%);
+  }
+
+  .tab-content {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .tab-content .tab-pane.klaim {
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    padding: 26px;
+  }
+  .gold-info img {
+    width: 62px;
+  }
+  .gold-info h1 {
+    font-size: 40px;
+  }
+  .gold-info p {
+    font-size: 14px;
+  }
+  .klaim .footer img {
+    width: 62px;
+  }
+  .klaim .footer h1 {
+    margin-top: 6px;
+    font-size: 36px;
+    padding-left: 10px;
+  }
+  .klaim .footer p {
+    font-size: 18px;
+    padding-left: 10px;
+  }
+  .klaim .footer .button {
+    text-align: right;
+  }
+  .tab-content .tab-pane.dapatkan {
+    height: auto;
+  }
+  .tab-content .tab-pane .content {
+    padding: 26px;
+  }
+  .tab-content .tab-pane .content h1 {
+    font-size: 30px;
+  }
+  .tab-content .tab-pane .content p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .tab-content .tab-pane .content .btn {
+    width: 100%;
+  }
+  .content-tukar {
+    margin: 0 auto;
+    padding: 0 auto;
+    width: auto;
+  }
+  .content-tukar h1 {
+    font-size: 32px;
+  }
+  .content-tukar .card {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .content-tukar .card .card-body {
+    padding: 8px 20px 4px;
+    text-align: center !important;
+  }
+  .content-tukar .card-body h1 {
+    font-size: 24px;
+  }
+  .content-tukar .card-body .btn {
+    margin-top: 8px;
+    font-size: 22px;
+    padding: 6px 10px;
+  }
+  .content-tukar .card-body .btn img {
+    width: 22px;
+  }
+  .section-content {
+    padding-top: 50px;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+  }
+  .section-content .container {
+    width: auto;
+  }
+  .section-content .card {
+    padding: 10px 5px;
+  }
+  .section-content .card .card-body h1 {
+    font-size: 20px;
+  }
+  .section-content .card .card-body p {
+    font-size: 16px;
+    text-align: justify;
+  }
+  .section-content .non-table .number {
+    font-size: 32px;
+    vertical-align: top;
+  }
+  .section-content .non-table .description {
+    font-size: 14px;
+    text-align: justify;
+    vertical-align: middle;
+  }
+  .section-content .btn-card {
+    min-width: 250px;
+    padding: 10px 16px;
+    font-size: 18px;
+  }
+  .section-content .table thead tr th {
+    font-size: 16px;
+    text-align: left;
+    padding: 10px;
+    vertical-align: middle;
+  }
+  .section-content .table tbody tr td {
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .tab-content .tab-pane.history {
+    padding: 10px 4px;
+    height: 80%;
+    width: 100%;
+  }
+  .gold-dapat img {
+    object-fit: cover;
+    height: 100px;
+    width: 100%;
+  }
+  .gold-dapat h6 {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: justify !important;
+  }
+  .gold-dapat p {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0;
+    text-align: justify !important;
+  }
+  .gold-dapat p img {
+    width: 32px;
+  }
+}
+

@@ -1,0 +1,2 @@
+detail transaksi id yang tidak proper diterapkan ke user_mapel
+id transaksi digunakan user lain di detail transaksi id
