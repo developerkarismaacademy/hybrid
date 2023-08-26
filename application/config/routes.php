@@ -55,7 +55,10 @@ $route['translate_uri_dashes'] = false;
 
 # BACK V2 ROUTE
 
+$route['back-v2'] = 'back-v2/Dashboard';
 
+# Auth
+$route['back-v2/login'] = 'back-v2/Authentication/login';
 
 
 
