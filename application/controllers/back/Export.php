@@ -44,6 +44,8 @@ class Export extends CI_Controller
 		$sheet->setCellValue('K1', "pre_test");
 		$sheet->setCellValue('L1', "post_test");
 		$sheet->setCellValue('M1', "link_sertifikat");
+		$sheet->setCellValue('N1', "rating");
+		$sheet->setCellValue('O1', "ulasan");
 		$sheet->getStyle('A1')->applyFromArray($style_col);
 		$sheet->getStyle('B1')->applyFromArray($style_col);
 		$sheet->getStyle('C1')->applyFromArray($style_col);
@@ -57,20 +59,23 @@ class Export extends CI_Controller
 		$sheet->getStyle('K1')->applyFromArray($style_col);
 		$sheet->getStyle('L1')->applyFromArray($style_col);
 		$sheet->getStyle('M1')->applyFromArray($style_col);
+		$sheet->getStyle('N1')->applyFromArray($style_col);
+		$sheet->getStyle('O1')->applyFromArray($style_col);
 
 
 		if ($date1 == '' || $date2 == '') {
-			$siswa = $this->db->query("SELECT t1.posttest, t2.pretest, `user`.id_user, `mapel`.meta_link_mapel, `transaksi`.id_transaksi, `transaksi`.kode_voucher, `user`.nama_user, `user`.email_user, `user`.telepon_user, `redeem`.redeem_code, `transaksi`.tanggal AS tanggal_pembelian, `redeem`.TIMESTAMP AS tanggal_redeem, `user_mapel_progress`.progress, `user_mapel_progress`.updated_at AS tanggal_pengerjaan FROM `user` LEFT JOIN (SELECT log_ujian.nilai AS posttest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE posttest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t1 ON user.id_user = t1.user_id LEFT JOIN (SELECT log_ujian.nilai AS pretest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE pretest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t2 ON user.id_user = t2.user_id INNER JOIN transaksi ON `user`.id_user = transaksi.user_id INNER JOIN `detail_transaksi` ON `user`.id_user = `detail_transaksi`.user_id AND `transaksi`.id_transaksi = `detail_transaksi`.transaksi_id INNER JOIN `mapel` ON `detail_transaksi`.mapel_id = `mapel`.id_mapel LEFT JOIN `redeem` ON `redeem`.user_id = `user`.id_user LEFT JOIN `user_mapel_progress` ON `user_mapel_progress`.mapel_id = `mapel`.id_mapel AND `user_mapel_progress`.user_id = `user`.id_user WHERE mapel.meta_link_mapel = '$meta_mapel' LIMIT $limit")->result_array();
+			$siswa = $this->db->query("SELECT t1.posttest, t2.pretest, `user`.id_user, `mapel`.meta_link_mapel, `transaksi`.id_transaksi, `transaksi`.kode_voucher, `user`.nama_user, `user`.email_user, `user`.telepon_user, `redeem`.redeem_code, `transaksi`.tanggal AS tanggal_pembelian, `redeem`.TIMESTAMP AS tanggal_redeem, `user_mapel_progress`.progress, `user_mapel_progress`.updated_at AS tanggal_pengerjaan, rating.rating, rating.ulasan FROM `user` LEFT JOIN (SELECT log_ujian.nilai AS posttest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE posttest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t1 ON `user`.id_user = t1.user_id LEFT JOIN (SELECT log_ujian.nilai AS pretest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE pretest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t2 ON `user`.id_user = t2.user_id INNER JOIN transaksi ON `user`.id_user = transaksi.user_id INNER JOIN `detail_transaksi` ON `user`.id_user = `detail_transaksi`.user_id AND `transaksi`.id_transaksi = `detail_transaksi`.transaksi_id INNER JOIN `mapel` ON `detail_transaksi`.mapel_id = `mapel`.id_mapel LEFT JOIN `redeem` ON `redeem`.user_id = `user`.id_user LEFT JOIN `user_mapel_progress` ON `user_mapel_progress`.mapel_id = `mapel`.id_mapel AND `user_mapel_progress`.user_id = `user`.id_user LEFT JOIN rating ON rating.user_id = `user`.id_user AND rating.mapel_id = mapel.id_mapel WHERE mapel.meta_link_mapel = '$meta_mapel' LIMIT $limit")->result_array();
 		} else {
 			$date1 = date('Y-m-d H:i:s', strtotime($date1));
 			$date2 = date('Y-m-d H:i:s', strtotime($date2));
-			$siswa = $this->db->query("SELECT t1.posttest, t2.pretest, `user`.id_user, `mapel`.meta_link_mapel, `transaksi`.id_transaksi, `transaksi`.kode_voucher, `user`.nama_user, `user`.email_user, `user`.telepon_user, `redeem`.redeem_code, `transaksi`.tanggal AS tanggal_pembelian, `redeem`.TIMESTAMP AS tanggal_redeem, `user_mapel_progress`.progress, `user_mapel_progress`.updated_at AS tanggal_pengerjaan FROM `user` LEFT JOIN (SELECT log_ujian.nilai AS posttest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE posttest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t1 ON user.id_user = t1.user_id LEFT JOIN (SELECT log_ujian.nilai AS pretest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE pretest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t2 ON user.id_user = t2.user_id INNER JOIN transaksi ON `user`.id_user = transaksi.user_id INNER JOIN `detail_transaksi` ON `user`.id_user = `detail_transaksi`.user_id AND `transaksi`.id_transaksi = `detail_transaksi`.transaksi_id INNER JOIN `mapel` ON `detail_transaksi`.mapel_id = `mapel`.id_mapel LEFT JOIN `redeem` ON `redeem`.user_id = `user`.id_user LEFT JOIN `user_mapel_progress` ON `user_mapel_progress`.mapel_id = `mapel`.id_mapel AND `user_mapel_progress`.user_id = `user`.id_user WHERE mapel.meta_link_mapel = '$meta_mapel' AND transaksi.tanggal BETWEEN '$date1' AND '$date2' LIMIT $limit")->result_array();
+			$siswa = $this->db->query("SELECT t1.posttest, t2.pretest, `user`.id_user, `mapel`.meta_link_mapel, `transaksi`.id_transaksi, `transaksi`.kode_voucher, `user`.nama_user, `user`.email_user, `user`.telepon_user, `redeem`.redeem_code, `transaksi`.tanggal AS tanggal_pembelian, `redeem`.TIMESTAMP AS tanggal_redeem, `user_mapel_progress`.progress, `user_mapel_progress`.updated_at AS tanggal_pengerjaan, rating.rating, rating.ulasan FROM `user` LEFT JOIN (SELECT log_ujian.nilai AS posttest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE posttest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t1 ON `user`.id_user = t1.user_id LEFT JOIN (SELECT log_ujian.nilai AS pretest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE pretest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t2 ON `user`.id_user = t2.user_id INNER JOIN transaksi ON `user`.id_user = transaksi.user_id INNER JOIN `detail_transaksi` ON `user`.id_user = `detail_transaksi`.user_id AND `transaksi`.id_transaksi = `detail_transaksi`.transaksi_id INNER JOIN `mapel` ON `detail_transaksi`.mapel_id = `mapel`.id_mapel LEFT JOIN `redeem` ON `redeem`.user_id = `user`.id_user LEFT JOIN `user_mapel_progress` ON `user_mapel_progress`.mapel_id = `mapel`.id_mapel AND `user_mapel_progress`.user_id = `user`.id_user LEFT JOIN rating ON rating.user_id = `user`.id_user AND rating.mapel_id = mapel.id_mapel WHERE mapel.meta_link_mapel = '$meta_mapel' AND transaksi.tanggal BETWEEN '$date1' AND '$date2' LIMIT $limit")->result_array();
 		}
 
 		$no = 1;
 		$numrow = 2;
 		foreach ($siswa as $data) {
 			$linkSertifikat = ($data['progress'] == 100) ? base_url('download-sertifikat/' . $data['meta_link_mapel'] . '/' . $data['id_user']) : '-';
+
 			$sheet->setCellValue('A' . $numrow, invoice($data['id_transaksi']) ?? '-');
 			$sheet->setCellValue('B' . $numrow, $data['nama_user'] ?? '-');
 			$sheet->setCellValue('C' . $numrow, $data['email_user'] ?? '-');
@@ -84,6 +89,8 @@ class Export extends CI_Controller
 			$sheet->setCellValue('K' . $numrow, $data['pretest'] ?? '-');
 			$sheet->setCellValue('L' . $numrow, $data['posttest'] ?? '-');
 			$sheet->setCellValue('M' . $numrow, $linkSertifikat);
+			$sheet->setCellValue('N' . $numrow, $data['rating'] ?? '-');
+			$sheet->setCellValue('O' . $numrow, $data['ulasan'] ?? '-');
 
 			$sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
 			$sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -98,6 +105,8 @@ class Export extends CI_Controller
 			$sheet->getStyle('K' . $numrow)->applyFromArray($style_row);
 			$sheet->getStyle('L' . $numrow)->applyFromArray($style_row);
 			$sheet->getStyle('M' . $numrow)->applyFromArray($style_row);
+			$sheet->getStyle('N' . $numrow)->applyFromArray($style_row);
+			$sheet->getStyle('O' . $numrow)->applyFromArray($style_row);
 
 			$no++;
 			$numrow++;
