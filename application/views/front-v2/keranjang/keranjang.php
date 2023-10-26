@@ -282,7 +282,7 @@ if (isset($mapel)) {
 										<a id="btnCheckout" class="btn btn-warning btn-block btn-rounded p-2"
 										   href="javascript:alertTransaksi();">CHECKOUT</a>
 									</div>
-									<div class="col-12">
+									<div class="col-12 d-none">
 										<div class="small py-2">Punya Kode Promo?</div>
 										<form>
 											<div class="input-group" bis_skin_checked="1">

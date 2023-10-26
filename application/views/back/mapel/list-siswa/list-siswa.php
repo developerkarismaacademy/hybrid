@@ -86,6 +86,9 @@
 													<option value="100">100</option>
 													<option value="200">200</option>
 													<option value="500">500</option>
+													<option value="1000">1000</option>
+													<option value="1500">1500</option>
+													<option value="2000">2000</option>
 												</select>
 											</div>
 										</div>
@@ -115,12 +118,16 @@
 								<th>Pretest</th>
 								<th>PostTest</th>
 								<th>Sertifikat</th>
+								<th>Unjuk Ketrampilan</th>
 							</tr>
 							</thead>
 							<tbody>
-							<?php foreach ($siswa as $siswaData) : ?>
-								<?php
+							<?php
+							foreach ($siswa as $siswaData) :
+								$metaLinkMapel = $siswaData['meta_link_mapel'];
 								$userId = $siswaData['id_user'];
+								$tugas = $this->db->query("SELECT log_praktek.file,log_praktek.tipe,materi.id_materi FROM materi JOIN (SELECT bab.id_bab FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN (SELECT MAX(bab.urutan_bab) AS urutan FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id WHERE mapel.meta_link_mapel = '$metaLinkMapel') t1 ON bab.urutan_bab = t1.urutan WHERE mapel.meta_link_mapel = '$metaLinkMapel') t1 ON t1.id_bab = materi.bab_id JOIN log_praktek ON log_praktek.materi_id = materi.id_materi WHERE log_praktek.user_id = $userId")->result_array();
+
 								?>
 								<tr>
 									<td>
@@ -160,8 +167,55 @@
 										<?= $siswaData['posttest'] ?? '-' ?>
 									</td>
 									<td><?= $siswaData['progress'] == 100 ? '<a href="' . base_url('download-sertifikat/' . $siswaData['meta_link_mapel'] . '/' . $userId) . '" class="badge badge-secondary">Sertifikat</a>' : '-' ?></td>
+									<td>
+										<?php if (count($tugas) > 0): ?>
+											<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+													data-target="#tugasModal<?= $userId ?>">Tugas
+											</button>
+										<?php else: ?>
+											-
+										<?php endif; ?>
+									</td>
 								</tr>
-							<?php endforeach; ?>
+								<div id="tugasModal<?= $userId ?>" style="margin-top:100px !important"
+									 class="modal fade" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;
+												</button>
+												<h4 class="modal-title">Tugas</h4>
+											</div>
+											<div class="modal-body">
+												<?php foreach ($tugas as $item): ?>
+													<?php
+													if ($item["tipe"] == "link") {
+														$file = $item["file"];
+														$link = $file;
+													} else {
+														$link = base_url() . "upload/praktek/" . $userId . "/" . $item["id_materi"] . "/" . $item["file"];
+														$file = strtolower(getFileExtension($item["file"]));
+														$file = array_key_exists($file, knownType) ? knownType[$file] : 'EKSTENSI TIDAK DI KETAHUI';
+														$file = "FILE " . $file;
+													}
+													?>
+													<p><a target="_blank" href="<?= $link ?>"><?= $file ?></a></p>
+												<?php endforeach; ?>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">
+													Close
+												</button>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							<?php
+							endforeach;
+							?>
 							</tbody>
 						</table>
 

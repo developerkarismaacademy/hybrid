@@ -52,6 +52,7 @@
 								<option>100</option>
 							</select>
 						</div>
+                        <a href="<?= base_url('back/siswa/export') ?>" class="btn btn-primary">Export</a>
 						<div class="search-box pull-right">
 							<form id="form-search">
 								<div class="input-group">

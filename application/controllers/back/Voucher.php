@@ -4,8 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Voucher extends CI_Controller
 {
-    private $data;
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -33,36 +32,38 @@ class Voucher extends CI_Controller
     }
 
     public function save()
-    {
-        $this->data['title'] = "Tambah Voucher";
+	{
+		$this->data['title'] = "Tambah Voucher";
+		$this->data['content'] = "voucher-v2.form";
 
-        $this->data['content'] = "voucher-v2.form";
+		$validation = $this->form_validation;
+		$validation->set_rules($this->mv->rules());
+		if ($this->form_validation->run() == false) {
+			$this->data['mapel'] = $this->db->get_where('mapel', ['prakerja' => 1])->result();
+			$this->load->view('back/main', $this->data);
+		} else {
+			$qty = $this->input->post('qty');
+			$kode = $this->input->post('kode_voucher');
+			$mapel_id = $this->input->post('mapel_id');
+			$live_access = $this->input->post('live_access') ?? 0;
+			
+			for ($i = 0; $i < $qty; $i++) {
+				$voucher = randomVoucher(10, 'voucher_prakerja', 'kode_voucher', $kode);
+				$data = [
+					"kode_voucher" => $voucher,
+					"mapel_id" => $mapel_id,
+					"live_access" => $live_access
+				];
+				$this->db->insert('voucher_prakerja', $data);
+			}
 
-        $validation = $this->form_validation;
-        $validation->set_rules($this->mv->rules());
-
-        if ($this->form_validation->run() == false) {
-            $this->data['mapel'] = $this->db->get_where('mapel', ['prakerja' => 1])->result();
-
-
-            $this->load->view('back/main', $this->data);
-        } else {
-            $qty = $this->input->post('qty');
-            $kode = $this->input->post('kode_voucher');
-            $mapel_id = $this->input->post('mapel_id');
-            for ($i = 0; $i < $qty; $i++) {
-                $voucher = randomVoucher(10, 'voucher_prakerja', 'kode_voucher', $kode);
-                $data = [
-                    "kode_voucher" => $voucher,
-                    "mapel_id" => $mapel_id,
-					"live_access" => 0
-                ];
-                $this->db->insert('voucher_prakerja', $data);
-            }
-
-            return redirect('back/voucher');
-        }
-    }
+			if ($this->input->post('submit')) {
+				return redirect('back/voucher/detail/' . $mapel_id);
+			} else {
+				return redirect('back/voucher/save');
+			}
+		}
+	}
     public function delete($mapel_id = '', $voucher_id = '')
     {
         $this->db->where('id_voucher', $voucher_id);

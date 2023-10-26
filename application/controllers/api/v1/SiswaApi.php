@@ -7,7 +7,6 @@ class SiswaApi extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('back/SiswaModel', 'BackSiswaModel', true);
-		$this->load->model('back/PesertaModel', 'BackPesertaModel', true);
 	}
 
 	public function jsondata()
@@ -178,13 +177,11 @@ class SiswaApi extends CI_Controller
 			->set_output(json_encode($return));
 
 	}
-
-
-	public function peserta()
+    public function peserta()
 	{
-		$user = $this->BackPesertaModel->getSiswaByMapel(122139);
+		$user = $this->db->query("SELECT t1.posttest, t2.pretest, `user`.id_user, `mapel`.meta_link_mapel, `transaksi`.id_transaksi, `transaksi`.kode_voucher, `user`.nama_user, `user`.email_user, `user`.telepon_user, `redeem`.redeem_code, `transaksi`.tanggal AS tanggal_pembelian, `redeem`.TIMESTAMP AS tanggal_redeem, `user_mapel_progress`.progress, `user_mapel_progress`.updated_at AS tanggal_pengerjaan FROM `user` LEFT JOIN (SELECT log_ujian.nilai AS posttest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE posttest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t1 ON user.id_user = t1.user_id LEFT JOIN (SELECT log_ujian.nilai AS pretest, log_ujian.user_id FROM mapel JOIN bab ON mapel.id_mapel = bab.mapel_id JOIN materi ON materi.bab_id = bab.id_bab JOIN log_ujian ON materi.id_materi = log_ujian.materi_id WHERE pretest_status = 1 GROUP BY log_ujian.user_id ORDER BY log_ujian.id_log_ujian DESC) t2 ON user.id_user = t2.user_id INNER JOIN transaksi ON `user`.id_user = transaksi.user_id INNER JOIN `detail_transaksi` ON `user`.id_user = `detail_transaksi`.user_id AND `transaksi`.id_transaksi = `detail_transaksi`.transaksi_id INNER JOIN `mapel` ON `detail_transaksi`.mapel_id = `mapel`.id_mapel LEFT JOIN `redeem` ON `redeem`.user_id = `user`.id_user LEFT JOIN `user_mapel_progress` ON `user_mapel_progress`.mapel_id = `mapel`.id_mapel AND `user_mapel_progress`.user_id = `user`.id_user WHERE mapel.id_mapel = 122139 ORDER BY `transaksi`.tanggal DESC")->result_array();
 		foreach ($user as &$data) {
-			$data->sertifikat = $data->progress == 100 ? base_url('download-sertifikat/' . $data->meta_link_mapel . '/' . $data->id_user) : null;
+			$data['sertifikat'] = $data['progress'] == 100 ? base_url('download-sertifikat/' . $data['meta_link_mapel'] . '/' . $data['id_user']) : null;
 		}
 		return $this->output
 			->set_content_type('application/json')
@@ -196,5 +193,4 @@ class SiswaApi extends CI_Controller
 				]
 			));
 	}
-
 }

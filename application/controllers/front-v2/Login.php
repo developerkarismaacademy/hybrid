@@ -24,12 +24,12 @@ class Login extends CI_Controller
 		$this->load->view("front-v2/main", $this->data);
 	}
 
-	
+
 	public function registerform()
 	{
 		$this->data['title'] = "LoginPage";
 		$this->data['content'] = "form";
-	
+
 		$this->load->view("front-v2/main", $this->data);
 	}
 
@@ -74,13 +74,120 @@ class Login extends CI_Controller
 		}
 	}
 
-	public function lupa()
-	{
-		$this->data['title'] = "Lupa password";
-		$this->data['content'] = "login.lupa";
+    public function lupa()
+    {
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        if ($this->form_validation->run() == false) {
+            $this->data['title'] = "Lupa password";
+            $this->data['content'] = "login.lupa";
+            $this->load->view("front-v2/main", $this->data);
+        } else {
+            $email = $this->input->post('email');
+            $user = $this->db->get_where('user', ['email_user' => $email])->row_array();
+
+            if ($user) {
+                $token = base64_encode(random_bytes(32));
+                $user_token = [
+                    'email' => $email,
+                    'token' => $token
+                ];
+
+                $this->db->insert('user_token', $user_token);
+                $this->_sendEmail($token);
+                alert('success', 'Berhasil', 'Silahkan cek email untuk melakukan reset password');
+                redirect(base_url('login/lupa'));
+            } else {
+                alert('warning', 'Data tidak ditemukan', 'Email tidak terdaftar');
+                redirect(base_url('login/lupa'));
+            }
+        }
+
+    }
+
+    public function resetpassword()
+    {
+        $email = $this->input->get('email');
+        $user = $this->db->get_where('user', ['email_user' => $email])->row_array();
+
+        if ($user) {
+            $token = $this->input->get('token');
+            $user_token = $this->db->get_where('user_token', ['token' => $token, 'email' => $email])->row_array();
+
+            if ($user_token) {
+                $this->session->set_userdata('reset_email', $email);
+                $this->reset();
+            } else {
+                alert('danger', 'Data tidak ditemukan', 'Token tidak valid!');
+                redirect(base_url('login'));
+            }
+        } else {
+            alert('danger', 'Data tidak ditemukan', 'Email tidak terdaftar');
+            redirect(base_url('login'));
+        }
+    }
+
+
+    public function reset()
+    {
+        if (!$this->session->userdata('reset_email')) {
+            redirect(base_url('login'));
+        }
+
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]|matches[confirm_password]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[8]|matches[password]');
+
+        if ($this->form_validation->run() == false) {
+            $this->data['title'] = "Reset password";
+            $this->data['content'] = "login.resetpassword";
+            $this->load->view("front-v2/main", $this->data);
+        } else {
+            $email = $this->session->userdata('reset_email');
+            $password = crypt(crypt($this->input->post('password'), garem), garem);
+
+            $this->db->set('password', $password);
+            $this->db->where('email_user', $email);
+            $this->db->update('user');
+
+            $this->session->unset_userdata('reset_email');
+
+            $this->db->delete('user_token', ['email' => $email]);
+
+            alert('success', 'Reset Berhasil', 'Password berhasil direset silahkan login kembali');
+            redirect(base_url('login'));
+        }
+    }
+
+    public function _sendEmail($token)
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'mail.karismaacademy.com',
+            'smtp_user' => 'bariqfirjatullah1803@karismaacademy.com',
+            'smtp_pass' => 'aku089619',
+            'smtp_port' => 587,
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+
+        $this->email->initialize($config);
+
+        $this->email->from('bariqfirjatullah1803@karismaacademy.com', 'Reset Password');
+        $this->email->to($this->input->post('email'));
+
+        $this->email->subject('Reset Password');
+        $this->email->message('Silahkan click link ini untuk melakukan reset password : <a href="' . base_url() . 'login/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Reset Password</a>');
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            // echo $this->email->print_debugger();
+            // die;
+            alert('danger', 'Gagal Lupa Passsword', 'Harap menghubungi admin untuk lupa password');
+            redirect(base_url('login'));
+        }
+    }
 
 	public function daftar()
 	{
@@ -151,7 +258,6 @@ class Login extends CI_Controller
 							'model_id' => $this->db->insert_id()
 						];
 						$this->db->insert('model_has_roles',$modelHasRolesInput);
-
 
 						$user["nama_depan"] = explode(" ", $user["nama_user"])[0];
 						$this->session->set_userdata(['siswaData' => $user]);

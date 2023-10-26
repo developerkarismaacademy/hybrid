@@ -51,6 +51,11 @@
 											<?= $this->session->flashdata('error') ?>
 										</div>
 								<?php endif ?>
+								<?php if ($this->session->flashdata('success')): ?>
+										<div class="alert alert-success" role="alert">
+											<?= $this->session->flashdata('success') ?>
+										</div>
+								<?php endif ?>
 									<h4 class="fs-20">Sign In</h4>
 									<p class="text-muted mb-3">Enter your email address and password to access
 										account.

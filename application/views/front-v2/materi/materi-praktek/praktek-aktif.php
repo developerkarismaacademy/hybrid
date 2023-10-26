@@ -1,3 +1,9 @@
+<?php
+$user = $this->FrontAuthModel->getUserLoggedIn();
+$user_id = $user['data']['id_user'];
+
+$log_praktek = $this->db->get_where('log_praktek', ['materi_id' => $materiActive['id_materi'], 'user_id' => $user_id])->num_rows();
+?>
 <div class="mx-auto">
     <div class="container-fluid">
         <div class="row align-items-center mb-3">
@@ -97,9 +103,12 @@
                                 </p>
 
                             </form>
-                            <button id="btn-dokumen" class="d-block btn btn-danger">
+                            <button id="btn-dokumen" class="btn btn-danger">
                                 SIMPAN
                             </button>
+                            <?php if ($log_praktek > 0 && $materiAkhir === false) : ?>
+                                <a href="<?= $linkSelanjutnya ?>" class="btn btn-danger px-5">MATERI SELANJUTNYA</a>
+                            <?php endif; ?>
                         </div>
                         <div class="tab-pane fade" id="file-lampiran" role="tabpanel"
                              aria-labelledby="file-lampiran-tab">
@@ -121,7 +130,9 @@
                             <button id="btn-lampiran" class="d-block btn btn-danger w-25">
                                 SIMPAN
                             </button>
-
+                            <?php if ($log_praktek > 0 && $materiAkhir === false) : ?>
+                                <a href="<?= $linkSelanjutnya ?>" class="btn btn-danger px-5">MATERI SELANJUTNYA</a>
+                            <?php endif; ?>
                         </div>
                         <div class="tab-pane fade" id="file-gambar" role="tabpanel"
                              aria-labelledby="file-gambar-tab">
@@ -144,6 +155,9 @@
                             <button id="btn-gambar" class="d-block btn btn-danger w-25">
                                 SIMPAN
                             </button>
+                            <?php if ($log_praktek > 0 && $materiAkhir === false) : ?>
+                                <a href="<?= $linkSelanjutnya ?>" class="btn btn-danger px-5">MATERI SELANJUTNYA</a>
+                            <?php endif; ?>
                         </div>
                         <div class="tab-pane fade" id="file-link" role="tabpanel"
                              aria-labelledby="file-link-tab">
@@ -171,6 +185,9 @@
                             <button id="btn-link" class="d-block btn btn-danger w-25">
                                 SIMPAN
                             </button>
+                            <?php if ($log_praktek > 0 && $materiAkhir === false) : ?>
+                                <a href="<?= $linkSelanjutnya ?>" class="btn btn-danger px-5">MATERI SELANJUTNYA</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

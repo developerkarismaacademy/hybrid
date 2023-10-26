@@ -103,17 +103,6 @@
 																	$progressKehadiran = ($progressKehadiran >= 100) ? 100 : $progressKehadiran;
 																	?>
 																	<div class="my-3">
-																		Total Kehadiran <span
-																			class="ml-3"><b><?= $progressKehadiran ?>%</b></span>
-																	</div>
-																	<div class="progress">
-																		<div class="progress-bar" role="progressbar"
-																			 style="width: <?= $progressKehadiran ?>%"
-																			 aria-valuenow="<?= $progressKehadiran ?>"
-																			 aria-valuemin="0" aria-valuemax="100">
-																		</div>
-																	</div>
-																	<div class="my-3">
 																		Total Aktivitas <span
 																			class="ml-3"><b><?= $progressAktivitas ?>%</b></span>
 																	</div>

@@ -10,11 +10,11 @@
 
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script>
-	$(document).ready(function () {
-		let table = $('#siswa-data').DataTable({
-			scrollX: true
-		});
-	})
+    $(document).ready(function () {
+        var table = $('#siswa-data').DataTable({
+            scrollX: true
+        });
+    })
 </script>
 <script src="<?= base_url(); ?>assets/back/pages/mapel/list-siswa.js" type="text/javascript">
 </script>

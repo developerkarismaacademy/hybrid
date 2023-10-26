@@ -5,417 +5,421 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Page extends CI_Controller
 {
 
-	private $data;
+    private $data;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->data['page'] = "home";
+
+        $this->load->model("front-v2/KelasModel", "FrontKelasModel");
+        $this->load->model("front-v2/PaketModel", "FrontPaketModel");
+        $this->load->model("front-v2/MapelModel", "FrontMapelModel");
+        $this->load->model("front-v2/BabModel", "FrontBabModel");
+        $this->load->model("front-v2/MateriModel", "FrontMateriModel");
+        $this->load->model("front-v2/UlasanModel", "FrontUlasanModel");
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('siswaData');
+        unset($_SESSION["raporIdUser"]);
+        unset($_SESSION["idMapelBeli"]);
+
+        redirect(base_url());
+    }
+
+    public function index()
+    {
+        $this->data['title'] = "Home";
+        $this->data['content'] = "dashboard";
+
+        $getAllKelas = $this->FrontKelasModel->getAllKelas();
+
+        if ($getAllKelas["total"] > 0) {
+            foreach ($getAllKelas["data"] as $keyKelas => $valueKelas) {
+                $getAllMapel = $this->FrontMapelModel->getAllMapel("mapel.kelas_id = {$valueKelas["id_kelas"]}", "rating_rata", "DESC", 40);
+                $getAllKelas["data"][$keyKelas]["mapel"] = $getAllMapel;
+            }
+        }
+
+        $this->data['dataKelas'] = $getAllKelas;
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->data['page'] = "home";
+        $getAllPaket = $this->FrontPaketModel->getPaket();
+
+        $this->data['dataPaket'] = $getAllPaket;
 
-		$this->load->model("front-v2/KelasModel", "FrontKelasModel");
-		$this->load->model("front-v2/PaketModel", "FrontPaketModel");
-		$this->load->model("front-v2/MapelModel", "FrontMapelModel");
-		$this->load->model("front-v2/BabModel", "FrontBabModel");
-		$this->load->model("front-v2/MateriModel", "FrontMateriModel");
-		$this->load->model("front-v2/UlasanModel", "FrontUlasanModel");
-	}
+        // Mapel Prakerja
+        $this->db->select('mapel.banner_mapel,mapel.meta_link_mapel,mapel.nama_mapel');
+        $this->db->join('kelas', 'kelas.id_kelas = mapel.kelas_id');
+        // $this->db->where('kelas.meta_link_kelas', 'prakerja');
+        $this->db->where('mapel.status', 1);
+        $this->db->where('mapel.prakerja', 1);
+        $this->data['dataMapelPrakerja'] = $this->db->get('mapel')->result_array();
 
-	public function logout()
-	{
-		$this->session->unset_userdata('siswaData');
-		unset($_SESSION["raporIdUser"]);
-		unset($_SESSION["idMapelBeli"]);
+        $this->data['dataTestimoni'] = $this->FrontUlasanModel->getAllTestimoni(3)["data"];
 
-		redirect(base_url());
-	}
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-	public function index()
-	{
-		$this->data['title'] = "Home";
-		$this->data['content'] = "dashboard";
+    public function tentang()
+    {
 
-		$getAllKelas = $this->FrontKelasModel->getAllKelas();
+        $this->data['title'] = "Tentang";
+        $this->data['content'] = "tentang";
 
-		if ($getAllKelas["total"] > 0) {
-			foreach ($getAllKelas["data"] as $keyKelas => $valueKelas) {
-				$getAllMapel = $this->FrontMapelModel->getAllMapel("mapel.kelas_id = {$valueKelas["id_kelas"]}", "rating_rata", "DESC", 40);
-				$getAllKelas["data"][$keyKelas]["mapel"] = $getAllMapel;
-			}
-		}
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-		$this->data['dataKelas'] = $getAllKelas;
+    public function profil($aksi = "")
+    {
 
-		$getAllPaket = $this->FrontPaketModel->getPaket();
+        $this->data['title'] = "Profil";
+        $this->data['content'] = "profil";
+        if ($aksi != "") {
+            $this->data['content'] = "profil.profil-" . $aksi;
+        }
 
-		$this->data['dataPaket'] = $getAllPaket;
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-		//		$getAllMapel = $this->FrontMapelModel->getAllMapel("", "rating_rata", "DESC", 12);
-		//
-		//		$this->data['dataMapel'] = $getAllMapel;
+    public function kursus($jenis = "list", $meta_link_mapel = "")
+    {
+        $this->data['title'] = "Kursus " . $jenis;
+        $this->data['content'] = "kursus.kursus-" . $jenis;
 
-		$getAllMapelPrakerja = $this->FrontMapelModel->getAllMapelPrakerja("mapel.prakerja = 1", "rating_rata", "DESC", 12);
+        $this->data = $this->cariKursus();
 
-		$this->data['dataMapelPrakerja'] = $getAllMapelPrakerja;
+        if ($jenis == "detail") {
+            $where = "meta_link_mapel = '$meta_link_mapel'";
 
-		$this->data['dataTestimoni'] = $this->FrontUlasanModel->getAllTestimoni(3)["data"];
+            $mapelQuery = $this->FrontMapelModel->getAllMapel($where);
+            $getMapelSatuan = $mapelQuery["data"][0];
+            if ($meta_link_mapel == "" || $mapelQuery["total"] == 0) {
+                redirect(base_url());
+            }
+            $where = "id_kelas = " . $getMapelSatuan["kelas_id"];
+            $getKelasSatuan = $this->FrontKelasModel->getAllKelas($where)["data"][0];
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+            $this->data["valueMapel"] = $getMapelSatuan;
+            foreach ($getKelasSatuan as $key => $val) {
+                $this->data["valueMapel"][$key] = $val;
+            }
+            $this->data['title'] .= " " . $this->data["valueMapel"]["nama_mapel"];
+            // dataMapel
+        }
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-	public function tentang()
-	{
 
-		$this->data['title'] = "Tentang";
-		$this->data['content'] = "tentang";
+    public function paket($meta_link = "")
+    {
+        $this->data['title'] = "Paket ";
+        $this->data['content'] = "paket";
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $getAllPaket = $this->FrontPaketModel->getPaket();
 
-	public function profil($aksi = "")
-	{
+        $this->data['dataPaket'] = $getAllPaket;
+        // if ($meta_link == "") {
+        // 	redirect(base_url() . "v2");
+        // }
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-		$this->data['title'] = "Profil";
-		$this->data['content'] = "profil";
-		if ($aksi != "") {
-			$this->data['content'] = "profil.profil-" . $aksi;
-		}
+    public function kelas()
+    {
+        $this->data['title'] = "Daftar Kelas";
+        $this->data['content'] = "kelas";
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->data["dataKelas"] = $this->FrontKelasModel->getAllKelas();
+        $this->data["dataMapel"] = $this->FrontMapelModel->getAllMapel("", "rating_rata", "DESC", 1);
 
-	public function kursus($jenis = "list", $meta_link_mapel = "")
-	{
-		$this->data['title'] = "Kursus " . $jenis;
-		$this->data['content'] = "kursus.kursus-" . $jenis;
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-		$this->data = $this->cariKursus();
 
-		if ($jenis == "detail") {
-			$where = "meta_link_mapel = '$meta_link_mapel'";
+    public function materi($jenis = "teks")
+    {
 
-			$mapelQuery = $this->FrontMapelModel->getAllMapel($where);
-			$getMapelSatuan = $mapelQuery["data"][0];
-			if ($meta_link_mapel == "" || $mapelQuery["total"] == 0) {
-				redirect(base_url());
-			}
-			$where = "id_kelas = " . $getMapelSatuan["kelas_id"];
-			$getKelasSatuan = $this->FrontKelasModel->getAllKelas($where)["data"][0];
+        $this->data['title'] = "Materi";
+        $this->data['content'] = "materi.materi-" . $jenis;
 
-			$this->data["valueMapel"] = $getMapelSatuan;
-			foreach ($getKelasSatuan as $key => $val) {
-				$this->data["valueMapel"][$key] = $val;
-			}
-			$this->data['title'] .= " " . $this->data["valueMapel"]["nama_mapel"];
-			// dataMapel
-		}
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->load->view("front-v2/main", $this->data);
+    }
 
 
-	public function paket($meta_link = "")
-	{
-		$this->data['title'] = "Paket ";
-		$this->data['content'] = "paket";
+    public function keranjang()
+    {
 
-		$getAllPaket = $this->FrontPaketModel->getPaket();
+        $this->data['title'] = "Keranjang";
+        $this->data['content'] = "keranjang";
 
-		$this->data['dataPaket'] = $getAllPaket;
-		// if ($meta_link == "") {
-		// 	redirect(base_url() . "v2");
-		// }
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-	public function kelas()
-	{
-		$this->data['title'] = "Daftar Kelas";
-		$this->data['content'] = "kelas";
 
-		$this->data["dataKelas"] = $this->FrontKelasModel->getAllKelas();
-		$this->data["dataMapel"] = $this->FrontMapelModel->getAllMapel("", "rating_rata", "DESC", 1);
+    public function konfirmasi()
+    {
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->data['title'] = "Konfirmasi";
+        $this->data['content'] = "konfirmasi";
 
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-	public function materi($jenis = "teks")
-	{
 
-		$this->data['title'] = "Materi";
-		$this->data['content'] = "materi.materi-" . $jenis;
+    public function sertifikatDownload($meta_link_mapel = "")
+    {
+        $where = "meta_link_mapel = '{$meta_link_mapel}'";
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $dataMapel = $this->FrontMapelModel->getAllMapel($where);
 
+        if ($dataMapel["total"] > 0) {
+            $mapel = $dataMapel["data"][0];
 
-	public function keranjang()
-	{
+            $id_mapel = $mapel["id_mapel"];
+            $meta_link_mapel = $mapel["meta_link_mapel"];
+            $id_user = $_SESSION['siswaData']['id_user'];
 
-		$this->data['title'] = "Keranjang";
-		$this->data['content'] = "keranjang";
+            $this->data["mapel"] = $mapel;
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+            $dataUlasan = $this->FrontUlasanModel->getByUlasan($id_user, $id_mapel);
+            if ($dataUlasan["total"] > 0) {
+                try {
 
+                    $namaMurid = $_SESSION['siswaData']['nama_user'];
+                    $lengthNamaMurid = strlen($namaMurid);
+                    $fontsizeNamaMurid = 20;
+                    $namaMuridArray = [];
+                    if ($lengthNamaMurid > 32) {
+                        $sisa = $lengthNamaMurid - 32;
 
-	public function konfirmasi()
-	{
+                        if ($sisa > 6) {
+                            $namaMuridArray = str_split($namaMurid, 32);
+                        } else {
+                            $fontsizeNamaMurid -= 4;
+                        }
+                    }
 
-		$this->data['title'] = "Konfirmasi";
-		$this->data['content'] = "konfirmasi";
+                    $namaInstruktur = $mapel["nama_instruktur"];
+                    $lengthNamaInstruktur = strlen($namaInstruktur);
+                    $fontsizeNamaInstruktur = 20;
+                    $namaInstrukturArray = [];
+                    if ($lengthNamaInstruktur > 20) {
+                        $sisa = $lengthNamaInstruktur - 20;
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+                        if ($sisa > 6) {
+                            $namaInstrukturArray = str_split($namaInstruktur, 20);
+                        } else {
+                            $fontsizeNamaInstruktur -= 4;
+                        }
+                    }
 
+                    $namaOwner = "Nizar Luthfiansyah";
+                    $lengthNamaOwner = strlen($namaOwner);
+                    $fontsizeNamaOwner = 16;
+                    $namaOwnerArray = [];
+                    if ($lengthNamaOwner > 20) {
+                        $sisa = $lengthNamaOwner - 20;
 
-	public function sertifikatDownload($meta_link_mapel = "")
-	{
-		$where = "meta_link_mapel = '{$meta_link_mapel}'";
+                        if ($sisa > 6) {
+                            $namaOwnerArray = str_split($namaOwner, 20);
+                        } else {
+                            $fontsizeNamaOwner -= 4;
+                        }
+                    }
 
-		$dataMapel = $this->FrontMapelModel->getAllMapel($where);
+                    $namaMapel = $mapel["nama_mapel"];
 
-		if ($dataMapel["total"] > 0) {
-			$mapel = $dataMapel["data"][0];
+                    $lengthNamaMapel = strlen($namaMapel);
 
-			$id_mapel = $mapel["id_mapel"];
-			$meta_link_mapel = $mapel["meta_link_mapel"];
-			$id_user = $_SESSION['siswaData']['id_user'];
+                    $fontsizeNamaMapel = 20;
+                    $namaMapelArray = [];
+                    if ($lengthNamaMapel > 32) {
+                        $sisa = $lengthNamaMapel - 32;
 
-			$this->data["mapel"] = $mapel;
+                        if ($sisa > 6) {
+                            $namaMapelArray = str_split($namaMapel, 32);
+                        } else {
+                            $fontsizeNamaMapel -= 4;
+                        }
+                    }
 
-			$dataUlasan = $this->FrontUlasanModel->getByUlasan($id_user, $id_mapel);
-			if ($dataUlasan["total"] > 0) {
-				try {
 
-					$namaMurid = $_SESSION['siswaData']['nama_user'];
-					$lengthNamaMurid = strlen($namaMurid);
-					$fontsizeNamaMurid = 20;
-					$namaMuridArray = [];
-					if ($lengthNamaMurid > 32) {
-						$sisa = $lengthNamaMurid - 32;
+                    // 	$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
+                    // 	$fontData = $defaultFontConfig['fontdata'];
 
-						if ($sisa > 6) {
-							$namaMuridArray = str_split($namaMurid, 32);
-						} else {
-							$fontsizeNamaMurid -= 4;
-						}
-					}
+                    // 	$fontData = $fontData + [
+                    // 		"bebasneue" => [
+                    // 			"R" => "BebasNeue-Regular.ttf"
+                    // 		],
+                    // 		"opensans"  => [
+                    // 			"R" => "OpenSans-Regular.ttf",
+                    // 			"I" => "OpenSans-Italic.ttf",
+                    // 			"B" => "OpenSans-Bold.ttf"
+                    // 		]
+                    // 	];
 
-					$namaInstruktur = $mapel["nama_instruktur"];
-					$lengthNamaInstruktur = strlen($namaInstruktur);
-					$fontsizeNamaInstruktur = 20;
-					$namaInstrukturArray = [];
-					if ($lengthNamaInstruktur > 20) {
-						$sisa = $lengthNamaInstruktur - 20;
+                    // 	$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L', "fontdata" => $fontData, 'default_font' => 'bebasneue']);
 
-						if ($sisa > 6) {
-							$namaInstrukturArray = str_split($namaInstruktur, 20);
-						} else {
-							$fontsizeNamaInstruktur -= 4;
-						}
-					}
+                    // 	$mpdf->setTitle($mapel["nama_mapel"]);
 
-					$namaOwner = "Nizar Luthfiansyah";
-					$lengthNamaOwner = strlen($namaOwner);
-					$fontsizeNamaOwner = 16;
-					$namaOwnerArray = [];
-					if ($lengthNamaOwner > 20) {
-						$sisa = $lengthNamaOwner - 20;
 
-						if ($sisa > 6) {
-							$namaOwnerArray = str_split($namaOwner, 20);
-						} else {
-							$fontsizeNamaOwner -= 4;
-						}
-					}
+                    // 	$pageCount = $mpdf->setSourceFile("./upload/Sertifikat-09.pdf");
+                    // 	$tplId = $mpdf->importPage($pageCount);
+                    // 	$mpdf->SetPageTemplate($tplId);
+                    // 	$mpdf->AddFontDirectory("../assets/front/v2/fonts");
 
-					$namaMapel = $mapel["nama_mapel"];
-
-					$lengthNamaMapel = strlen($namaMapel);
-
-					$fontsizeNamaMapel = 20;
-					$namaMapelArray = [];
-					if ($lengthNamaMapel > 32) {
-						$sisa = $lengthNamaMapel - 32;
-
-						if ($sisa > 6) {
-							$namaMapelArray = str_split($namaMapel, 32);
-						} else {
-							$fontsizeNamaMapel -= 4;
-						}
-					}
-
-
-				// 	$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
-				// 	$fontData = $defaultFontConfig['fontdata'];
-
-				// 	$fontData = $fontData + [
-				// 		"bebasneue" => [
-				// 			"R" => "BebasNeue-Regular.ttf"
-				// 		],
-				// 		"opensans"  => [
-				// 			"R" => "OpenSans-Regular.ttf",
-				// 			"I" => "OpenSans-Italic.ttf",
-				// 			"B" => "OpenSans-Bold.ttf"
-				// 		]
-				// 	];
-
-				// 	$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L', "fontdata" => $fontData, 'default_font' => 'bebasneue']);
-
-				// 	$mpdf->setTitle($mapel["nama_mapel"]);
-					
-
-				// 	$pageCount = $mpdf->setSourceFile("./upload/Sertifikat-09.pdf");
-				// 	$tplId = $mpdf->importPage($pageCount);
-				// 	$mpdf->SetPageTemplate($tplId);
-				// 	$mpdf->AddFontDirectory("../assets/front/v2/fonts");
-				
-				    $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
+                    $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
                     $fontDirs = $defaultConfig['fontDir'];
-                
+
                     $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
                     $fontData = $defaultFontConfig['fontdata'];
-                
+
                     $mpdf = new \Mpdf\Mpdf([
-                        'fontDir'      => array_merge($fontDirs, [
+                        'fontDir' => array_merge($fontDirs, [
                             __DIR__ . '/vendor/mpdf/mpdf/ttfonts',
                         ]),
-                        'fontdata'     => $fontData + [
+                        'fontdata' => $fontData + [
                                 'bebasneue' => [
                                     'R' => '-Regular.ttf',
                                 ],
-                                "opensans"  => [
-        							"R" => "OpenSans-Regular.ttf",
-        							"I" => "OpenSans-Italic.ttf",
-        							"B" => "OpenSans-Bold.ttf"
-        						]
+                                "opensans" => [
+                                    "R" => "OpenSans-Regular.ttf",
+                                    "I" => "OpenSans-Italic.ttf",
+                                    "B" => "OpenSans-Bold.ttf"
+                                ]
                             ],
                         'default_font' => 'merriweather'
                     ]);
-                    
+
                     $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L', "fontdata" => $fontData, 'default_font' => 'bebasneue']);
 
-					$mpdf->setTitle($mapel["nama_mapel"]);
-					
-					$pageCount = $mpdf->setSourceFile("./upload/Sertifikat-09.pdf");
-					$tplId = $mpdf->importPage($pageCount);
-					$mpdf->SetPageTemplate($tplId);
+                    $mpdf->setTitle($mapel["nama_mapel"]);
 
-					$mpdf->WriteFixedPosHTML("
+                    $pageCount = $mpdf->setSourceFile("./upload/Sertifikat-09.pdf");
+                    $tplId = $mpdf->importPage($pageCount);
+                    $mpdf->SetPageTemplate($tplId);
+
+                    $mpdf->WriteFixedPosHTML("
                         <h1 style='font-family: bebasneue;color: #f5b21b;font-size: 45px;font-weight: 100'>CERTIFICATE OF ACHIEVEMENT</h1>
                     ", 36, 15, 200, 50);
 
-					//PRINT NAMA
+                    //PRINT NAMA
 
-					$awal = 69;
-					if (count($namaMuridArray) > 0) {
-						foreach ($namaMuridArray as $key => $value) {
-							$mpdf->WriteFixedPosHTML("	
+                    $awal = 69;
+                    if (count($namaMuridArray) > 0) {
+                        foreach ($namaMuridArray as $key => $value) {
+                            $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #f5b21b;font-size: {$fontsizeNamaMurid}px;font-weight: bold'>{$value}</h1>
                     ", 37, $awal, 200, 50);
-							$awal += 8;
-						}
-					} else {
-						$awal += 4;
-						$mpdf->WriteFixedPosHTML("	
+                            $awal += 8;
+                        }
+                    } else {
+                        $awal += 4;
+                        $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #f5b21b;font-size: {$fontsizeNamaMurid}px;font-weight: bold'>{$namaMurid}</h1>
                     ", 37, $awal, 200, 50);
-					}
+                    }
 
 
-					//PRINT NAMA MATA PELAJARAN
+                    //PRINT NAMA MATA PELAJARAN
 
-					$awal = 92;
-					if (count($namaMapelArray) > 0) {
-						foreach ($namaMapelArray as $key => $value) {
-							$mpdf->WriteFixedPosHTML("	
+                    $awal = 92;
+                    if (count($namaMapelArray) > 0) {
+                        foreach ($namaMapelArray as $key => $value) {
+                            $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #f5b21b;font-size: {$fontsizeNamaMapel}px;font-weight: bold'>{$value}</h1>
                     ", 37, $awal, 200, 50);
-							$awal += 8;
-						}
-					} else {
-						$awal += 4;
-						$mpdf->WriteFixedPosHTML("	
+                            $awal += 8;
+                        }
+                    } else {
+                        $awal += 4;
+                        $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #f5b21b;font-size: {$fontsizeNamaMapel}px;font-weight: bold'>{$namaMapel}</h1>
                     ", 37, $awal, 200, 50);
-					}
+                    }
 
-					$mpdf->Image('upload/tanda_tangan/' . $mapel["tanda_tangan_instruktur"], 37, 140, 40, 40, 'jpg', '', true, false);
-					$mpdf->Image('upload/tanda_tangan/nizar.png', 105, 140, 40, 40, 'jpg', '', true, false);
+                    $mpdf->Image('upload/tanda_tangan/' . $mapel["tanda_tangan_instruktur"], 37, 140, 40, 40, 'jpg', '', true, false);
+                    $mpdf->Image('upload/tanda_tangan/nizar.png', 105, 140, 40, 40, 'jpg', '', true, false);
 
 
-					if (count($namaInstrukturArray) > 0) {
-						$awal = 164;
-						foreach ($namaInstrukturArray as $key => $value) {
-							$mpdf->WriteFixedPosHTML("	
+                    if (count($namaInstrukturArray) > 0) {
+                        $awal = 164;
+                        foreach ($namaInstrukturArray as $key => $value) {
+                            $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #fff;font-size: {$fontsizeNamaInstruktur}px;font-weight: bold'>{$value}</h1>
                     ", 37, $awal, 200, 50);
-							$awal += 8;
-						}
-					} else {
-						$mpdf->WriteFixedPosHTML("	
+                            $awal += 8;
+                        }
+                    } else {
+                        $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #fff;font-size: {$fontsizeNamaInstruktur}px;font-weight: bold'>{$namaInstruktur}</h1>
                     ", 37, 172, 200, 50);
-					}
+                    }
 
-					if (count($namaOwnerArray) > 0) {
-						$awal = 164;
-						foreach ($namaOwnerArray as $key => $value) {
-							$mpdf->WriteFixedPosHTML("	
+                    if (count($namaOwnerArray) > 0) {
+                        $awal = 164;
+                        foreach ($namaOwnerArray as $key => $value) {
+                            $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #fff;font-size: {$fontsizeNamaOwner}px;font-weight: bold'>{$value}</h1>
                     ", 105, $awal, 200, 50);
-							$awal += 8;
-						}
-					} else {
-						$mpdf->WriteFixedPosHTML("	
+                            $awal += 8;
+                        }
+                    } else {
+                        $mpdf->WriteFixedPosHTML("	
                         <h1 style='font-family: opensans;color: #fff;font-size: {$fontsizeNamaOwner}px;font-weight: bold'>{$namaOwner}</h1>
                     ", 105, 172, 200, 50);
-					}
+                    }
 
-					$mpdf->Output();
-				} catch (\Mpdf\MpdfException $e) {
-					echo $e->getMessage();
-				}
-			} else {
-				if ($mapel["progress"] >= 100) {
-					alert("danger", "Anda belum mengulas", "Sebelum mengakses sertifikat, isi terlebih dahulu ulasan");
-				}
-				redirect(base_url("ulasan/" . $meta_link_mapel));
-			}
-		} else {
-			$this->data["title"] = "Kursus Tidak Di Temukan";
-			$this->data["content"] = "404";
-			$this->load->view("front-v2/main", $this->data);
-		}
-	}
+                    $mpdf->Output();
+                } catch (\Mpdf\MpdfException $e) {
+                    echo $e->getMessage();
+                }
+            } else {
+                if ($mapel["progress"] >= 100) {
+                    alert("danger", "Anda belum mengulas", "Sebelum mengakses sertifikat, isi terlebih dahulu ulasan");
+                }
+                redirect(base_url("ulasan/" . $meta_link_mapel));
+            }
+        } else {
+            $this->data["title"] = "Kursus Tidak Di Temukan";
+            $this->data["content"] = "404";
+            $this->load->view("front-v2/main", $this->data);
+        }
+    }
 
-	public function portofolio()
-	{
-		$this->data['title'] = "Portofolio";
-		$this->data['content'] = "portofolio";
+    public function portofolio()
+    {
+        $this->data['title'] = "Portofolio";
+        $this->data['content'] = "portofolio";
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-	public function detailPortofolio()
-	{
-		$this->data['title'] = "Detail Portofolio";
-		$this->data['content'] = "portofolio.detail";
+    public function detailPortofolio()
+    {
+        $this->data['title'] = "Detail Portofolio";
+        $this->data['content'] = "portofolio.detail";
 
-		$this->load->view("front-v2/main", $this->data);
-	}
-	
-	public function prakerja()
-	{ 
-		$getAllMapelPrakerja = $this->FrontMapelModel->getAllMapelPrakerja("mapel.prakerja = 1", "rating_rata", "DESC", 12);
+        $this->load->view("front-v2/main", $this->data);
+    }
 
-		$this->data['dataMapelPrakerja'] = $getAllMapelPrakerja;
-		
-		$this->data['title'] = "Prakerja";
-		$this->data['content'] = "prakerja";
+    public function prakerja()
+    {
+        // Mapel Prakerja
+        $this->db->select('mapel.banner_mapel,mapel.meta_link_mapel,mapel.nama_mapel');
+        $this->db->join('kelas', 'kelas.id_kelas = mapel.kelas_id');
+        // $this->db->where('kelas.meta_link_kelas', 'prakerja');
+        $this->db->where('mapel.status', 1);
+        $this->db->where('mapel.prakerja', 1);
+        $this->data['dataMapelPrakerja'] = $this->db->get('mapel')->result_array();
 
-		$this->load->view("front-v2/main", $this->data);
-	}
+        $this->data['title'] = "Prakerja";
+        $this->data['content'] = "prakerja";
+
+        $this->load->view("front-v2/main", $this->data);
+    }
 
     public function voucher()
     {
@@ -429,9 +433,9 @@ class Page extends CI_Controller
         $this->load->view("front-v2/main", $this->data);
     }
 
-	public function promotion()
-	{
+    public function promotion()
+    {
         $this->load->view("front-v2/promotion/promotion");
-	}
+    }
 
 }

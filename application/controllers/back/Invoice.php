@@ -87,42 +87,41 @@ class Invoice extends CI_Controller
   public function import()
   {
     $file_data = $this->csvimport->get_array($_FILES["csv_file"]["tmp_name"]);
-
     $index = 0;
     foreach ($file_data as $fd) {
       $this->db->where('invoice', $fd['No. Invoice']);
       $exist = $this->db->get('invoice_prakerja');
       if (!$exist->num_rows() > 0) {
-		  $input = [
-			  'invoice' => $fd['No. Invoice'],
-			  'email' => $fd['Email'],
-			  'no_ponsel' => $fd['No.Ponsel'],
-			  'partisipasi' => $fd['Partisipasi'],
-			  'pembelian' => $fd['Pembelian'],
-			  'mapel_id' => $this->input->post('mapel_id')
-		  ];
-		  $this->db->insert('invoice_prakerja', $input);
-		  $code = 201;
-		  $data[$index]['message'] = $fd['No. Invoice'] . " Data berhasil di input !";
-		  $data[$index]['success'] = true;
-		  $data[$index]['status_code'] = $code;
-		  $data[$index]['data'] = $fd;
-	  } else {
-		  $code = 422;
-		  $data[$index]['message'] = $fd['No. Invoice'] . " Data sudah pernah di input !";
-		  $data[$index]['success'] = false;
-		  $data[$index]['status_code'] = $code;
-		  $this->db->set('partisipasi', $fd['Partisipasi']);
-		  $this->db->where('invoice', $fd['No. Invoice']);
-		  $this->db->update('invoice_prakerja');
-		  $data[$index]['data'] = $exist->result_array();
-	  }
+        $input = [
+          'invoice' => $fd['No. Invoice'],
+          'email' => $fd['Email'],
+          'no_ponsel' => $fd['No.Ponsel'],
+          'partisipasi' => $fd['Partisipasi'],
+          'pembelian' => $fd['Pembelian'],
+          'mapel_id' => $this->input->post('mapel_id')
+        ];
+        $this->db->insert('invoice_prakerja', $input);
+        $code = 201;
+        $data[$index]['message'] = $fd['No. Invoice'] . " Data berhasil di input !";
+        $data[$index]['success'] = true;
+        $data[$index]['status_code'] = $code;
+        $data[$index]['data'] = $fd;
+      } else {
+        $code = 422;
+        $data[$index]['message'] = $fd['No. Invoice'] . " Data sudah pernah di input !";
+        $data[$index]['success'] = false;
+        $data[$index]['status_code'] = $code;
+        $this->db->set('partisipasi', $fd['Partisipasi']);
+        $this->db->where('invoice', $fd['No. Invoice']);
+        $this->db->update('invoice_prakerja');
+        $data[$index]['data'] = $exist->result_array();
+      }
       $index++;
     }
-//    return $this->output
-//      ->set_content_type('application/json')
-//      ->set_status_header(200)
-//      ->set_output(json_encode($data));
+    return $this->output
+      ->set_content_type('application/json')
+      ->set_status_header(200)
+      ->set_output(json_encode($data));
   }
   public function v_import()
   {

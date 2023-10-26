@@ -38,7 +38,14 @@
                                 <label for="" class="form-label">Banyak Voucher</label>
                                 <input type="number" min="1" class="form-control" name="qty">
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="mb-3 form-check">
+								<input class="form-check-input" name="live_access" type="checkbox" value="1" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">
+									Live Access
+								</label>
+							</div>
+                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+							<button type="submit" class="btn btn-primary" name="submit_and_create_another">Submit And Create Another</button>
                         </form>
                     </div>
                 </div>

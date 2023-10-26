@@ -6,12 +6,7 @@
 				<div class="col-xs-12">
 					<div class="page-title-box">
 						<h4 class="page-title">
-							<a data-toggle="tooltip" data-placement="top" title=""
-							   data-original-title="List Kode Absen"
-							   href="<?= base_url('back/absen') ?>">
-								<i class="fa fa-arrow-left"></i>
-							</a>
-							<span
+                            <span
 								title="<?= $title ?>"><?= (strlen($title) > 40 ? substr($title, 0, 40) . "..." : $title) ?>
                             </span>
 						</h4>
@@ -30,6 +25,11 @@
 					<div class="card-box">
 						<form action="<?= base_url('back/absen/tambah') ?>" method="post">
 							<div class="mb-3 form-group">
+								<label id="label" for="" class="form-label">Kode Absen</label>
+								<input type="text" class="form-control" id="" name="kode_absen"
+									   value="<?= randomVoucher(5, 'absen', 'kode_absen', ''); ?>" readonly>
+							</div>
+							<div class="mb-3 form-group">
 								<label for="" class="control-label">Mapel</label>
 								<select class="js-example-disabled-results" name="mapel_id" id="mapel-id">
 									<?php foreach ($mapel as $m) : ?>
@@ -39,7 +39,16 @@
 								</select>
 							</div>
 							<div class="mb-3 form-group">
-								<label id="label" for="" class="form-label">Date</label>
+								<label for="" class="control-label">Materi</label>
+								<select class="js-example-disabled-results" name="materi_id" id="materi-id">
+								</select>
+							</div>
+							<div class="mb-3 form-group">
+								<label id="label" for="" class="form-label">Keterangan</label>
+								<textarea class="form-control" id="" name="keterangan" required></textarea>
+							</div>
+							<div class="mb-3 form-group">
+								<label id="label" for="" class="form-label">Expired Date</label>
 								<input type="datetime-local" class="form-control" name="expired_date" required>
 							</div>
 							<button type="submit" class="btn btn-primary">Submit</button>

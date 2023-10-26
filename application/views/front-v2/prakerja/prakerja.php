@@ -5,7 +5,7 @@
     <style>
 
         nav {
-            margin:auto;
+            margin: auto;
             text-align: center;
             width: 100%;
         }
@@ -14,10 +14,10 @@
             display: none;
         }
 
-        nav ul li:hover > ul{
+        nav ul li:hover > ul {
             display: block;
             width: 170px;
-            cursor : pointer;
+            cursor: pointer;
 
         }
 
@@ -31,32 +31,32 @@
 
         nav ul:after {
             content: "";
-            clear:both;
+            clear: both;
             display: block;
         }
 
-        nav ul li{
-            float:left;
+        nav ul li {
+            float: left;
         }
 
-        nav ul li:hover{
-            cursor : pointer;
+        nav ul li:hover {
+            cursor: pointer;
 
         }
 
-        nav ul li:hover a{
-            cursor : pointer;
-            color:#fff;
+        nav ul li:hover a {
+            cursor: pointer;
+            color: #fff;
         }
 
-        nav ul li a{
+        nav ul li a {
             display: block;
             padding: 25px;
             color: #fff;
             text-decoration: none;
         }
 
-        nav ul ul{
+        nav ul ul {
             border-radius: 0px;
             padding: 0;
             position: absolute;
@@ -64,36 +64,37 @@
             margin-left: -12%;
         }
 
-        nav ul ul li{
-            float:none;
+        nav ul ul li {
+            float: none;
             position: relative;
         }
 
-        nav ul ul li a{
+        nav ul ul li a {
             padding: 15px 40px;
             color: #fff;
         }
 
-        nav ul ul li a:hover{
+        nav ul ul li a:hover {
             background-color: #666;
-            cursor : pointer;
+            cursor: pointer;
         }
 
-        nav ul ul ul{
+        nav ul ul ul {
             position: absolute;
             left: 50%;
             top: 0;
         }
     </style>
-    <a href="<?php echo base_url('gamification');?>">
+    <a href="<?php echo base_url('gamification'); ?>">
         <nav>
             <ul class="fixed-bottom mr-5 mb-5 d-flex w-100">
-                <li class="ml-auto"><img class=" faa-pulse animated-hover" src="/assets/front/images/Frame.png" alt="karisma gold" width="75" >
-<!--                    <ul>-->
-<!--                        <li>-->
-<!--                            <p class="text-center" style="width: 100%; font-weight: bold; border-radius: 10px;   padding: 12px 0; padding-left: 2%; margin-left: 3%; background-color: #FFD100; color: white;">Selesaikan Misi, Tukarkan Goldnya!</p>-->
-<!--                        </li>-->
-<!--                    </ul>-->
+                <li class="ml-auto"><img class=" faa-pulse animated-hover" src="/assets/front/images/Frame.png"
+                                         alt="karisma gold" width="75">
+                    <!--                    <ul>-->
+                    <!--                        <li>-->
+                    <!--                            <p class="text-center" style="width: 100%; font-weight: bold; border-radius: 10px;   padding: 12px 0; padding-left: 2%; margin-left: 3%; background-color: #FFD100; color: white;">Selesaikan Misi, Tukarkan Goldnya!</p>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </li>
             </ul>
         </nav>
@@ -159,13 +160,14 @@
                                     Prakerja</span>? Pakai kuponnya atau cek sertifikat prakerja Anda.</h5>
                             <div class="d-flex justify-content-around justify-content-lg-start my-md-3">
                                 <a href="<?= base_url('profil') ?>"
-                                    class="btn btn-warning btn-use-coupon d-flex pl-0  mr-lg-3">
+                                   class="btn btn-warning btn-use-coupon d-flex pl-0  mr-lg-3">
                                     <img class="img-fluid pr-0"
-                                        src="<?= base_url('assets/front/v2/img/use-coupon.png') ?>" alt="">Gunakan Kupon
+                                         src="<?= base_url('assets/front/v2/img/use-coupon.png') ?>" alt="">Gunakan
+                                    Kupon
                                 </a>
                                 <a href="" class="btn btn-light btn-check-coupon d-flex pl-0">
                                     <img class="img-fluid pr-0"
-                                        src="<?= base_url('assets/front/v2/img/check-serti.png') ?>" alt="">Cek
+                                         src="<?= base_url('assets/front/v2/img/check-serti.png') ?>" alt="">Cek
                                     Sertifikat
                                 </a>
                             </div>
@@ -195,48 +197,24 @@
             </div>
 
             <div class="row d-flex justify-content-center mb-5">
-
-                <?php
-                if ($dataMapelPrakerja["total"] > 0) {
-                    $data["idClone"] = "1";
-                    foreach ($dataMapelPrakerja["data"] as $keyMapel => $valueMapel) {
-                        $data["keyMapel"] = $keyMapel;
-                        $data["valueMapel"] = $valueMapel;
-                        $coin = 0;
-                        $harga_mapel = $valueMapel['harga_basic'];
-                        if ($harga_mapel >= 1375000 && $harga_mapel <= 1999999) {
-                            $coin = 1500;
-                        } elseif ($harga_mapel >= 2000000 && $harga_mapel <= 2499000) {
-                            $coin = 2500;
-                        } elseif ($harga_mapel >= 2500000) {
-                            $coin = 3500;
-                        }
-                        ?>
-                        <div class="col-9 col-md-4 col-lg-3 mt-4">
-                            <div class="card card-white-shadow">
-                                <a href="<?= base_url("kursus/detail/{$valueMapel["meta_link_mapel"]}") ?>">
-                                    <img src="<?= base_url("upload/banner_mapel/{$valueMapel["banner_mapel"]}") ?>"
-                                        class="card-img-top" alt="...">
-                                </a>
-                                <div class="card-body d-flex justify-content-center ">
-                                    <div class="kelas-title font-weight-bold line-limit-3">
-                                        <div class="badge badge-pill badge-warning kelas-coin"><i class="fa fa-credit-card">
-                                                <?= $coin ?>
-                                            </i>
-                                        </div><br>
-                                        <a href="<?= base_url("kursus/detail/{$valueMapel["meta_link_mapel"]}") ?>"
-                                            class="nama-mapel">
-                                            <?= $valueMapel["nama_mapel"] ?>
-                                        </a>
-                                    </div>
+                <?php foreach ($dataMapelPrakerja as $mapelPrakerja) : ?>
+                    <div class="col-9 col-md-4 col-lg-3 mt-4">
+                        <div class="card card-white-shadow">
+                            <a href="<?= base_url("kursus/detail/{$mapelPrakerja["meta_link_mapel"]}") ?>">
+                                <img src="<?= base_url("upload/banner_mapel/{$mapelPrakerja["banner_mapel"]}") ?>"
+                                     class="card-img-top" alt="...">
+                            </a>
+                            <div class="card-body d-flex justify-content-center ">
+                                <div class="kelas-title font-weight-bold line-limit-3">
+                                    <a href="<?= base_url("kursus/detail/{$mapelPrakerja["meta_link_mapel"]}") ?>"
+                                       class="nama-mapel">
+                                        <?= $mapelPrakerja["nama_mapel"] ?>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <?php
-                    }
-                }
-                ?>
-
+                    </div>
+                <?php endforeach; ?>
             </div>
             <!-- <div class="row d-flex justify-content-center ">
                 <div class="kelas-list col-12 col-lg-12 ">
@@ -586,7 +564,7 @@
                         </p>
                         <p class="my-3">
                             Kembali ke <a class="text-primary text-break"
-                                href="https://hybrid.karismaacademy.com/prakerja">hybrid.karismaacademy.com/prakerja</a>,
+                                          href="https://hybrid.karismaacademy.com/prakerja">hybrid.karismaacademy.com/prakerja</a>,
                             lalu pilih kelas yang kamu ambil dan tukarkan kode vouchermu di kolom yang tersedia
                         </p>
                     </div>
@@ -648,7 +626,7 @@
                         </div>
                         <div class="col-5 col-lg-5 d-lg-block d-none ">
                             <img class="img-fluid img-robo" src="<?= base_url('assets/front/v2/img/robo-ico.png') ?>"
-                                alt="">
+                                 alt="">
                         </div>
                     </div>
                 </div>

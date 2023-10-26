@@ -36,28 +36,55 @@
 						<a class="nav-link active" id="pills-lupa1-tab" data-toggle="pill"
 						   href="#pills-lupa1"
 						   role="tab"
-						   aria-controls="pills-lupa1" aria-selected="true">Kirim Email</a>
+						   aria-controls="pills-lupa1" aria-selected="true">Reset Password</a>
 					</li>
 				</ul>
 				<div class="tab-content tab-animation tab-left" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="pills-lupa1" role="tabpanel"
 						 aria-labelledby="pills-lupa1-tab">
-						<form action="<?= base_url("login/lupa") ?>" method="post" class="form-custom">
+						<form
+							action="<?= base_url("login/reset") ?>"
+							method="post">
 							<div class="form-group">
-								<label for="username">Email akun anda</label>
-								<input type="email"
-									   class="form-control text-lowercase <?= (form_error('email') != "") ? " is-invalid " : "" ?>"
-									   id="username_lupa" name="email" value="<?= $username_lupa ?? "" ?>"
-									   aria-describedby="email" placeholder="sample@email.com">
+								<label for="password">New Password</label>
+								<div class="input-group">
+									<input type="password"
+										   class="form-control password-field <?= (form_error('password') != "") ? " is-invalid " : "" ?>"
+										   id="password_ubah"
+										   name="password"
+										   placeholder="Ubah Password">
+									<span class="icon-inside">
+										<i class="fa fa-eye-slash"></i>
+									</span>
 
-								<?php if (form_error('email') != ""): ?>
-									<div class="invalid-feedback mt-2">
-										<?php echo form_error('email'); ?>
-									</div>
-								<?php endif; ?>
+									<?php if (form_error('password') != ""): ?>
+										<div class="invalid-feedback mt-2">
+											<?php echo form_error('password'); ?>
+										</div>
+									<?php endif; ?>
+								</div>
 							</div>
+							<div class="form-group">
+								<label for="konfirmasi_password">Konfirmasi Password</label>
+								<div class="input-group">
+									<input type="password"
+										   class="form-control password-field <?= (form_error('confirm_password') != "") ? " is-invalid " : "" ?>"
+										   id="confirm_password"
+										   name="confirm_password"
+										   placeholder="Konfirmasi Password">
+									<span class="icon-inside">
+										<i class="fa fa-eye-slash"></i>
+									</span>
 
-							<button type="submit" class="btn btn-warning btn-lg rounded-custom btn-block">Kirim Request
+									<?php if (form_error('confirm_password') != ""): ?>
+										<div class="invalid-feedback mt-2">
+											<?php echo form_error('confirm_password'); ?>
+										</div>
+									<?php endif; ?>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-warning btn-lg rounded-custom btn-block">
+								Ubah Password
 							</button>
 						</form>
 

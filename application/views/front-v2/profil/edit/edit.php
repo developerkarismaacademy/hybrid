@@ -84,7 +84,7 @@
 													   class="form-control <?= (form_error('username') != "") ? " is-invalid " : "" ?>"
 													   id="username" name="username"
 													   value="<?= $username ?>"
-													   aria-describedby="username" placeholder="Username . . .">
+													   aria-describedby="username" placeholder="Username . . ." style="text-transform: lowercase">
 
 												<?php if (form_error('username') != ""): ?>
 													<div class="invalid-feedback mt-2">
@@ -98,7 +98,7 @@
 													   class="form-control <?= (form_error('email_user') != "") ? " is-invalid " : "" ?>"
 													   id="email_user" name="email_user"
 													   value="<?= $email_user ?>"
-													   aria-describedby="email_user" placeholder="Email . . .">
+													   aria-describedby="email_user" placeholder="Email . . ." style="text-transform: lowercase">
 
 												<?php if (form_error('email_user') != ""): ?>
 													<div class="invalid-feedback mt-2">

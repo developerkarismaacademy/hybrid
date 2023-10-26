@@ -96,33 +96,24 @@
 			?>
 			</div> -->
 			<div class="row d-flex justify-content-center ">
-
-				<?php
-				if ($dataMapelPrakerja["total"] > 0) {
-					$data["idClone"] = "1";
-					foreach ($dataMapelPrakerja["data"] as $keyMapel => $valueMapel) {
-						$data["keyMapel"] = $keyMapel;
-						$data["valueMapel"] = $valueMapel;
-				?>
-						<div class="col-9 col-md-4 col-lg-3 mt-4">
-							<div class="card card-white-shadow">
-								<a href="<?= base_url("kursus/detail/{$valueMapel["meta_link_mapel"]}") ?>">
-									<img src="<?= base_url("upload/banner_mapel/{$valueMapel["banner_mapel"]}") ?>" class="card-img-top" alt="...">
-								</a>
-								<div class="card-body d-flex justify-content-center ">
-									<div class="kelas-title font-weight-bold line-limit-3">
-										<a href="<?= base_url("kursus/detail/{$valueMapel["meta_link_mapel"]}") ?>" class="nama-mapel">
-											<?= $valueMapel["nama_mapel"] ?>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-				<?php
-					}
-				}
-				?>
-
+                <?php foreach ($dataMapelPrakerja as $mapelPrakerja) : ?>
+                    <div class="col-9 col-md-4 col-lg-3 mt-4">
+                        <div class="card card-white-shadow">
+                            <a href="<?= base_url("kursus/detail/{$mapelPrakerja["meta_link_mapel"]}") ?>">
+                                <img src="<?= base_url("upload/banner_mapel/{$mapelPrakerja["banner_mapel"]}") ?>"
+                                     class="card-img-top" alt="...">
+                            </a>
+                            <div class="card-body d-flex justify-content-center ">
+                                <div class="kelas-title font-weight-bold line-limit-3">
+                                    <a href="<?= base_url("kursus/detail/{$mapelPrakerja["meta_link_mapel"]}") ?>"
+                                       class="nama-mapel">
+                                        <?= $mapelPrakerja["nama_mapel"] ?>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
 			</div>
 
 

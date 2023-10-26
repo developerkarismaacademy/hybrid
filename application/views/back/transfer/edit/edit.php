@@ -44,62 +44,35 @@ $instrukturkah = $this->session->backData["level_user"] == "instruktur";
 						</div>
 					</div>
 					<div class="card-box">
-						<!-- Trigger the modal with a button -->
-						<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-bottom: 10px;"><i class="fa fa-plus"></i> Tambah Data</button> -->
-						<!-- <a href="<?= base_url('back/invoice/v_import') ?>" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-plus"></i> Import Excel</a> -->
-
-						<!-- Modal -->
-						<div id="myModal" class="modal fade" role="dialog">
-							<div class="modal-dialog">
-
-								<!-- Modal content-->
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title">Tambah Invoice</h4>
-									</div>
-									<div class="modal-body">
-										<div class="form-group">
-											<label for="" class="form-label">Invoice</label>
-											<textarea class="form-control" name="invoice" rows="5"
-												id="invoice-value"></textarea>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-primary" id="cek-invoice">Simpan</button>
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">Close</button>
-									</div>
-								</div>
-
-							</div>
-						</div>
 						<div>
-							<form action="<?= base_url('back/transfer/edit/') . $log_gamification['id'] ?>"
+							<form action="<?= base_url('back/transfer/edit/') . $transfer['id'] ?>"
 								method="post">
 								<div class="form-group">
-									<label class="control-label">Nama User</label>
+									<label class="control-label">Nama</label>
 									<input type="text" id="nama_user" name="nama_user" placeholder="Nama User . . ."
-										class="form-control" value="<?= $log_gamification['nama_user'] ?>" disabled>
+										class="form-control" value="<?= $transfer['nama_user'] ?>" disabled>
 								</div>
 								<div class="form-group">
-									<label class="control-label">Coin</label>
-									<input type="text" id="nama_user" name="nama_user" placeholder="Nama User . . ."
-										class="form-control" value="<?= $log_gamification['coin'] ?>" disabled>
+									<label class="control-label">Email</label>
+									<input type="text" id="email" name="email"
+										class="form-control" value="<?= $transfer['email_user'] ?>" disabled>
 								</div>
 								<div class="form-group">
-									<label class="control-label">Uang</label>
-									<input type="text" id="nama_user" name="nama_user" placeholder="Nama User . . ."
-										class="form-control"
-										value="Rp <?= number_format($log_gamification['uang'], 2, ',', '.') ?>"
-										disabled>
+									<label class="control-label">Bank Number</label>
+									<input type="text" id="bank_number" name="bank_number"
+										class="form-control" value="<?= $transfer['bank_number'] ?>" disabled>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Bank Type</label>
+									<input type="text" id="bank_type" name="bank_type"
+										class="form-control" value="<?= $transfer['bank_type'] ?>" disabled>
 								</div>
 								<div class="form-group">
 									<label class="control-label">Status</label>
 									<select class="js-example-disabled-results" name="status">
-										<option value="success" <?= ($log_gamification['status'] == 'success') ? 'disabled="disabled"' : '' ?>>
+										<option value="success" <?= ($transfer['status'] == 'success') ? 'selected"' : '' ?>>
 											Success</option>
-										<option value="pending" <?= ($log_gamification['status'] == 'pending') ? 'disabled="disabled"' : '' ?>>
+										<option value="pending" <?= ($transfer['status'] == 'pending') ? 'selected"' : '' ?>>
 											Pending</option>
 									</select>
 								</div>
@@ -110,6 +83,28 @@ $instrukturkah = $this->session->backData["level_user"] == "instruktur";
 								<button type="submit" class="btn btn-info btn-bordered waves-effect">Simpan
 								</button>
 							</form>
+						</div>
+						<div>
+							<table class="table table-bordered" style="margin-top: 1rem">
+								<thead>
+								<tr>
+									<th>Invoice</th>
+									<th>Coin</th>
+									<th>Status</th>
+									<th>Pelatihan</th>
+								</tr>
+								</thead>
+								<tbody>
+								<?php foreach ($invoice as $data): ?>
+									<tr>
+										<td><?= $data['invoice'] ?></td>
+										<td><?= $data['coin'] ?></td>
+										<td><?= $data['status'] ?></td>
+										<td><?= $data['nama_mapel'] ?></td>
+									</tr>
+								<?php endforeach; ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

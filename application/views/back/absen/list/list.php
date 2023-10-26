@@ -37,6 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Mapel</th>
                                         <th>Kode Absen</th>
                                         <th>Keterangan</th>
                                         <th>Expired Date</th>
@@ -49,8 +50,9 @@
                                     foreach ($absen as $item) : ?>
                                         <tr>
                                             <td><?= $no ?></td>
+                                            <td><?= $item['nama_mapel'] ?></td>
                                             <td><?= $item['kode_absen'] ?></td>
-                                            <td><?= $item['keterangan'] ?></td>
+                                            <td><?= $item['nama_materi'] .' '.$item['keterangan'] ?></td>
                                             <td><?= $item['expired_date'] ?></td>
                                             <td><?= $item['total_murid'] ?></td>
                                             <td>

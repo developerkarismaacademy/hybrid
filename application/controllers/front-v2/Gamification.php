@@ -243,5 +243,18 @@ class Gamification extends CI_Controller
 		$this->session->set_flashdata("success", "<strong>Gold berhasil didapatkan !</strong>");
 		redirect('profil/gamification', 'refresh');
 	}
+
+    public function update_payment($id)
+    {
+        $data = [
+            'bank_type' => $this->input->post('bank-type'),
+            'bank_number' => $this->input->post('bank-number')
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('gamification_transaction', $data);
+        $this->session->set_flashdata('success', '<strong>Payment berhasil dirubah</strong>');
+        redirect('profil/gamification', 'refresh');
+    }
 }
 /* End of file Gamification.php */

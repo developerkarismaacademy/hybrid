@@ -30,7 +30,7 @@
 							<div class="text-center">Silahkan klik pada bintang</div>
 							<div class="form-group">
 								<label for="ulasan">Ulasan</label>
-								<textarea class="form-control ulasan"
+								<textarea class="form-control ulasan mb-2"
 										  id="ulasan" name="ulasan"
 										  aria-describedby="text" placeholder="Isi ulasan disini" required></textarea>
 							</div>

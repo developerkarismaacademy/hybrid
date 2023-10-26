@@ -35,14 +35,26 @@ class Absen extends CI_Controller
 			$this->data['mapel'] = $this->db->get_where('mapel', ['kelas_id' => 14, 'prakerja' => 1])->result();
 			$this->load->view('back/main', $this->data);
 		} else {
-			$input = [
-				'kode_absen' => $this->input->post('kode_absen'),
-				'keterangan' => $this->input->post('keterangan'),
-				'mapel_id' => $this->input->post('mapel_id'),
-				'expired_date' => $this->input->post('expired_date'),
-				'materi_id' => $this->input->post('materi_id')
-			];
-			$this->db->insert('absen', $input);
+			$mapel_id = $this->input->post('mapel_id');
+			$all_materi = $this->am->getMateriWebinar($mapel_id);
+
+			$day = 0;
+			foreach ($all_materi as $materi) {
+				$kode_absen = randomVoucher(5, 'absen', 'kode_absen', '');
+				$keterangan = 'Sesi' . ($day + 1);
+				$expired_date = date("Y-m-d\TH:i", strtotime($this->input->post('expired_date') . ' +' . $day . 'day'));
+				$materi_id = $materi['id_materi'];
+
+				$this->db->insert('absen', [
+					'kode_absen' => $kode_absen,
+					'keterangan' => $keterangan,
+					'mapel_id' => $mapel_id,
+					'expired_date' => $expired_date,
+					'materi_id' => $materi_id
+				]);
+
+				$day++;
+			}
 
 			redirect(base_url('back/absen'));
 		}

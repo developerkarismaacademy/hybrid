@@ -190,7 +190,7 @@ class Profile extends CI_Controller
         $this->db->where('user_id', $userId);
         $this->data['user_invoice_prakerja'] = $this->db->get('user_invoice_prakerja')->result_array();
 
-        $this->db->select('mapel.nama_mapel,mapel.gambar_mapel,gamification_transaction.balance,gamification_transaction.created_at,gamification_transaction.status');
+        $this->db->select('mapel.nama_mapel,mapel.gambar_mapel,gamification_transaction.id,gamification_transaction.bank_type,gamification_transaction.bank_number,gamification_transaction.balance,gamification_transaction.created_at,gamification_transaction.status');
         $this->db->join('mapel', 'mapel.id_mapel = gamification_transaction.mapel_id');
         $this->db->where('user_id', $userId);
         $this->data['gamification_transaction'] = $this->db->get_where('gamification_transaction', ['bank_type !=' => 'null', 'bank_number !=' => 'null'])->result_array();

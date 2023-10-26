@@ -1,10 +1,15 @@
 <div class="text-center mx-auto" id="kuis-aktif">
 	<div class="container-fluid">
 		<div class="row align-items-center mb-3 justify-content-between">
-			<div class="col-12 col-md-6 d-flex align-items-center order-2 order-md-1 ">
+			<div class="col-12 col-md-8 d-flex align-items-center order-2 order-md-1 ">
 				<div class="mx-auto ml-md-0">
 					<span class="h2">
 						<span class="badge badge-pill badge-ka-blue"><?= $tipe ?></span>
+                        <?php if ($paket == null): ?>
+                            <span class="h2">
+								<span class="badge badge-pill badge-ka-blue"><?= $materiActive['nama_materi'] ?></span>
+							</span>
+                        <?php endif; ?>
 					</span>
 					<?php if ($paket != null) : ?>
 						<span class="h2 ml-2">

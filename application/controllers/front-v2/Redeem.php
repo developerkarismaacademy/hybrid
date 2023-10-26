@@ -82,9 +82,6 @@ class Redeem extends CI_Controller
 
         $success = $result['success'];
 
-        //var_dump($result);
-        //die;
-
         if ($success == 'true') {
 
             $this->data = [
@@ -105,8 +102,6 @@ class Redeem extends CI_Controller
 
             $this->load->view("front-v2/main", $this->data);
         } else {
-
-            // $this->session->set_flashdata('message', $message);
 
             alert("warning", "", "<strong>{$message}</strong>");
 
@@ -174,26 +169,21 @@ class Redeem extends CI_Controller
         $result = json_decode($result, true);
 
         $success = $result['success'];
-        //var_dump($result);
-        //die;
-        $data = [
-            'redeem_code' => $result['data']['redeem_code'],
-            'course_code' => $result['data']['course_code'],
-            'status' => $result['data']['status'],
-            'timestamp' => $timestamp,
-            'mapel_id' => $mapel_id,
-            'user_id' => $user_id
-        ];
-        var_dump($data);
-        die;
+
         if ($success == true) {
 
             $data = [
+
                 'redeem_code' => $result['data']['redeem_code'],
+
                 'course_code' => $result['data']['course_code'],
+
                 'status' => $result['data']['status'],
+
                 'timestamp' => $timestamp,
+
                 'mapel_id' => $mapel_id,
+
                 'user_id' => $user_id
             ];
 
@@ -202,20 +192,13 @@ class Redeem extends CI_Controller
 
 
             alert("success", "", "<strong>Data berhasil di redeem</strong>");
-            // echo '<script>console.log(' . $result . ')</script>';
 
             redirect('profil');
         } else {
 
-            // echo '<pre>';
-            // echo '<script>console.log(' . $result . ')</script>';
-            // print_r($result);
-
             $message = $result['message'];
 
             alert("warning", "", "<strong>{$message}</strong>");
-
-            // $this->session->set_flashdata('message', $message);
 
             redirect('profil');
         }

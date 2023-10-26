@@ -52,18 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['404_override'] = 'back/Dashboard/notFound404Alt';
 $route['translate_uri_dashes'] = false;
 
-
-# BACK V2 ROUTE
-
-$route['back-v2'] = 'back-v2/Dashboard';
-
-# Auth
-$route['back-v2/login'] = 'back-v2/Authentication/login';
-
-
-
-
-
 // ---- BACK PAGE ROUTE ---- //
 
 // -- DASHBOARD -- //
@@ -148,6 +136,8 @@ $route['back/testimoni/(:num)'] = 'back/Testimoni/index/$1';
 $route['back/kelas/(:any)/ubah'] = 'back/Kelas/ubah/$1';
 
 
+
+
 // --Asset -- //
 $route['back/asset/(:any)'] = 'back/Asset/index/$1';
 
@@ -221,6 +211,8 @@ $route["logout"] = "front-v2/Page/logout";
 //DEV MODE
 $route["login/lupa"] = "front-v2/Login/lupa";
 $route["login/lupa/send"] = "front-v2/Login/send";
+$route["login/resetpassword"] = "front-v2/Login/resetpassword";
+$route["login/reset"] = "front-v2/Login/reset";
 
 //PROFILE
 $route["profil"] = "front-v2/Profile/index";
@@ -242,7 +234,8 @@ $route["redeem/status"] = "front-v2/Redeem/status";
 
 //Gamification
 $route["profil/gamification"] = "front-v2/Profile/gamification";
-//$route["gamification"] = "front-v2/Page/Gamification";
+$route["profil/gamification/update_payment/(:num)"] = "front-v2/Gamification/update_payment/$1";
+// $route["gamification"] = "front-v2/Page/Gamification";
 
 
 //RegisterForm
@@ -296,6 +289,7 @@ $route['gamification/beli-kelas'] = 'front-v2/Gamification/get_course';
 
 // Export siswa 
 $route['back/export/(:any)'] = 'back/Export/index/$1';
+$route['back/siswa/export'] = 'back/Export/siswa';
 
 // Backend Absen
 $route['back/absen'] = 'back/Absen/index';
@@ -307,19 +301,9 @@ $route['back/absen/murid/(:num)/simpan'] = 'back/Absen/absenMurid/$1';
 // Frontend Absen
 $route['absen/(:num)/(:num)'] = 'front-v2/Absen/index/$1/$2';
 
-// Backend Transaksi Prakerja
-$route['back/transaksi-prakerja'] = 'back/TransaksiPrakerja/index';
-$route['back/transaksi-prakerja/list/(:any)'] = 'back/TransaksiPrakerja/list/$1';
-
 // Dev
 $route['dev/reset-password/(:any)'] = 'back/Dev/resetPassword/$1';
 
 // Prakerja Peserta
 $route['back/peserta'] = 'back/Peserta/index';
 $route['back/peserta/import'] = 'back/Peserta/import';
-
-// Api V2
-$route['api/v2/mapel'] = 'api/SiswaApi/index';
-
-
-$route['back/generate-sertifikat/(:any)/(:num)'] = 'back/Debug/sertifikat/$1/$2';

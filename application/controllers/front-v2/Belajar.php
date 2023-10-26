@@ -26,8 +26,14 @@ class Belajar extends CI_Controller
 		$where = "meta_link_mapel = '{$meta_link_mapel}'";
 
 		$dataMapel = $this->FrontMapelModel->getAllMapel($where);
-		$id_user = $_SESSION['siswaData']['id_user'];
-		$prakerjaStatus = $dataMapel['data'][0]['prakerja'] == 1 ? true : false;
+
+        $id_mapel = $dataMapel['data'][0]['id_mapel'];
+        $id_user = $_SESSION['siswaData']['id_user'];
+
+        $progress = $this->db->get_where('user_mapel_progress', ['user_id' => $id_user, 'mapel_id' => $id_mapel, 'progress' => 100])->num_rows();
+        $this->data['is_review'] = ($progress) ? $this->db->get_where('rating', ['user_id' => $id_user, 'mapel_id' => $id_mapel])->num_rows() : 1;
+
+        $prakerjaStatus = $dataMapel['data'][0]['prakerja'] == 1 ? true : false;
 		if ($prakerjaStatus) {
 			$redeemData = $this->db->get_where('redeem', ['user_id' => $id_user, 'mapel_id' => $dataMapel['data'][0]['id_mapel']]);
 			if ($redeemData->num_rows() == 0) {
@@ -81,7 +87,14 @@ class Belajar extends CI_Controller
 		$dataMapel = $this->FrontMapelModel->getAllMapel($where);
 		$user = $this->FrontAuthModel->getUserLoggedIn();
 		$user_id = $user['data']['id_user'];
-		$prakerjaStatus = $dataMapel['data'][0]['prakerja'] == 1 ? true : false;
+
+        $id_mapel = $dataMapel['data'][0]['id_mapel'];
+
+        $progress = $this->db->get_where('user_mapel_progress', ['user_id' => $user_id, 'mapel_id' => $id_mapel, 'progress' => 100])->num_rows();
+        $this->data['is_review'] = ($progress) ? $this->db->get_where('rating', ['user_id' => $user_id, 'mapel_id' => $id_mapel])->num_rows() : 1;
+
+
+        $prakerjaStatus = $dataMapel['data'][0]['prakerja'] == 1 ? true : false;
 		if ($prakerjaStatus) {
 			$redeemData = $this->db->get_where('redeem', ['user_id' => $user_id, 'mapel_id' => $dataMapel['data'][0]['id_mapel']]);
 			if ($redeemData->num_rows() == 0) {
@@ -96,6 +109,23 @@ class Belajar extends CI_Controller
 				redirect(base_url() . "kursus/detail/{$meta_link_mapel}");
 			}
 
+            // Feature Absen Terlambat
+            $user_redeem = $this->db->get_where('redeem', ['user_id' => $user_id, 'mapel_id' => $id_mapel])->row_array();
+            $user_redeem_timestamp = date('Y-m-d H:i:s', $user_redeem['timestamp']);
+
+            $this->db->select('id_bab');
+            $all_bab = $this->db->get_where('bab', ['mapel_id' => $id_mapel])->result_array();
+
+            $all_bab_id = array_column($all_bab, 'id_bab');
+
+            $this->db->select('id_materi,nama_materi,urutan_bab');
+            $this->db->join('bab', 'bab.id_bab = materi.bab_id');
+            $this->db->where_in('bab_id', $all_bab_id);
+            $this->db->where('webinar_status', 1);
+            $this->db->order_by('urutan_bab', 'ASC');
+            $all_materi = $this->db->get('materi')->result_array();
+            // End Feature Absen Terlambat
+
 			$dataBab = $this->FrontBabModel->getAllBab("meta_link_bab = '{$meta_link_bab}'");
 
 			if ($dataBab["total"] > 0) {
@@ -106,7 +136,26 @@ class Belajar extends CI_Controller
 				}
 
 				if ($this->data["materiActive"]["total"] > 0) {
-					$this->data["title"] = "Belajar Kelas {$mapel["nama_mapel"]}";
+                    // Feature absen terlambat
+                    $materi_active = $this->data['materiActive'];
+                    $materi_active_id = $materi_active['data'][0]['id_materi'];
+
+                    $this->data['expired_absen'] = null;
+                    $day = 0;
+                    foreach ($all_materi as &$materi) {
+                        if ($materi['id_materi'] === $materi_active_id) {
+                            $this->data['expired_absen'] = date('Y-m-d H:i:s', strtotime($user_redeem_timestamp . ' +' . $day . 'days'));
+                        }
+                        $materi['expired_absen'] = date('Y-m-d H:i:s', strtotime($user_redeem_timestamp . ' +' . $day . 'days'));
+                        $day++;
+                    }
+
+                    $this->db->join('absen', 'absen.id_absen = absen_terlambat.absen_id');
+                    $absen = $this->db->get_where('absen_terlambat', ['materi_id' => $materi_active_id])->row_array();
+                    $this->data['kode_absen'] = $absen['kode_absen'];
+                    // End Feature Absen Terlambat
+
+                    $this->data["title"] = "Belajar Kelas {$mapel["nama_mapel"]}";
 					$this->data["mapel"] = $mapel;
 					$this->data["bab"] = $dataBab["data"][0];
 					$this->data["materi"] = $this->FrontMateriModel->getAllMateriWithLog("bab_id = {$dataBab["data"][0]["id_bab"]}");

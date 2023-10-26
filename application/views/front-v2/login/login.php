@@ -15,7 +15,6 @@
 								1 => "Akses materi selamanya",
 								2 => "Tatap muka dengan instruktur",
 								3 => "Sertifikat terdaftar",
-
 						];
 						foreach ($dummyfitur as $k => $v) {
 							?>
@@ -56,7 +55,7 @@
 								<input type="text"
 									   class="form-control <?= (form_error('username_login') != "") ? " is-invalid " : "" ?>"
 									   id="username_login" name="username_login" value="<?= $username ?? "" ?>"
-									   aria-describedby="email" placeholder="sample@email.com">
+									   aria-describedby="email" placeholder="sample@email.com" style="text-transform: lowercase">
 
 								<?php if (form_error('username_login') != ""): ?>
 									<div class="invalid-feedback mt-2">
@@ -83,7 +82,7 @@
 								</div>
 							</div>
 							<div class="text-right">
-								Lupa password? Klik <a href="javascript:void(0)" class="text-info" id="loginLupa"><u><b>disini</b></u></a>
+								Lupa password? Klik <a href="<?= base_url('login/lupa')?>" class="text-info"><u><b>disini</b></u></a>
 							</div>
 							<div class="text-center">
 								<button type="submit" class="btn btn-warning btn-lg rounded-custom btn-block">Login
@@ -143,7 +142,7 @@
 								<input type="text"
 									   class="form-control <?= (form_error('username') != "") ? " is-invalid " : "" ?>"
 									   id="username_signup" name="username" value="<?= $username ?? "" ?>"
-									   aria-describedby="daftarEmail" placeholder="Username">
+									   aria-describedby="daftarEmail" placeholder="Username" style="text-transform: lowercase">
 
 								<?php if (form_error('username') != ""): ?>
 									<div class="invalid-feedback mt-2">
@@ -157,7 +156,7 @@
 								<input type="email"
 									   class="form-control <?= (form_error('email_user') != "") ? " is-invalid " : "" ?>"
 									   id="email_user" name="email_user" value="<?= $email_user ?? "" ?>"
-									   aria-describedby="daftarEmail" placeholder="Email">
+									   aria-describedby="daftarEmail" placeholder="Email" style="text-transform: lowercase">
 
 								<?php if (form_error('email_user') != ""): ?>
 									<div class="invalid-feedback mt-2">

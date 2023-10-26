@@ -9,9 +9,8 @@
 								<img src="<?= is_file_return('user', base_url('/upload/profile-picture/' . $this->session->siswaData["gambar_user"])) ?>" alt="" class="rounded-circle object-cover" width="100px" height="100px">
 							</div>
 							<div class="col-12 pb-4">
-								<h5 class="mt-0"><?= $this->session->siswaData["nama_user"] ?? "" ?></h5>
-								<a class="mb-0" href="<?= base_url("profil/edit") ?>">Edit
-									Profil <i class="fa fa-pencil text-warning"></i></a>
+								<h5 class="mt-0" style="text-transform: capitalize"><?= $this->session->siswaData["nama_user"] ?? "" ?></h5>
+								<a class="mb-0" href="<?= base_url("profil/edit") ?>">Edit Profil <i class="fa fa-pencil text-warning"></i></a>
 							</div>
 						</div>
 					</div>
