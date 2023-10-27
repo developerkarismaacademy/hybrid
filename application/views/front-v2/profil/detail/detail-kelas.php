@@ -121,12 +121,13 @@
 																<div class="row">
 																	<div
 																		class="<?= ($done) ? 'col-6  pr-2' : 'col-12' ?> ">
-																		<a class="btn btn-warning btn-block" <?= (!$statusRedeem) ? 'data-toggle="modal" data-target="#redeem" ' : '' ?>
+																		<a class="btn btn-warning btn-block" <?= (!$statusRedeem) ? 'data-toggle="modal" data-target="#redeem-' . $valueMapel['id_mapel'] . '"' : '' ?>
 																		   href="<?= $urlBelajar ?>">
 																			<i class="fa fa-arrow-right"></i>
 																		</a>
 																		<!-- Modal Redeem -->
-																		<div class="modal fade" id="redeem"
+																		<div class="modal fade"
+																			 id="redeem-<?= $valueMapel['id_mapel'] ?>"
 																			 tabindex="-1" aria-labelledby="redeemLabel"
 																			 aria-hidden="true">
 																			<div class="modal-dialog">

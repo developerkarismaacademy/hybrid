@@ -176,8 +176,7 @@ function DOMinnerHTML(DOMNode $element)
 function remove_unsusedhtml($isi)
 {
 	$isi = trim($isi);
-	$isi = preg_replace('/^<!DOCTYPE.+?>/', '', str_replace(['<html>', '</html>', '<body>', '</body>', '<head>', '</head>', '<title>', '</title>'], ['', '', '', '', '', '', '', ''], $isi));
-	;
+	$isi = preg_replace('/^<!DOCTYPE.+?>/', '', str_replace(['<html>', '</html>', '<body>', '</body>', '<head>', '</head>', '<title>', '</title>'], ['', '', '', '', '', '', '', ''], $isi));;
 	$isi = preg_replace('/<!--(.*)-->/Uis', '', $isi);
 	$isi = trim($isi);
 
@@ -334,4 +333,27 @@ function randomVoucher($length, $table, $column, $code)
 	} while ($count > 0);
 
 	return $code . $randomString;
+}
+
+function print_log($level, $message)
+{
+	$dir = 'logs/';
+
+	if (!file_exists($dir)) {
+		if (!mkdir($dir, 0777, true)) {
+			die("Error: Failed to create the directory.");
+		}
+	}
+
+	$timestamp_file = date("Y-m-d");
+	$timestamp_entry = date("Y-m-d H:i:s");
+	$log_entry = "$level - $timestamp_entry - $message \n";
+
+	$log_filename = 'log-' . $timestamp_file . '.txt';
+	$log_file = 'logs/' . $log_filename;
+
+	if ($file_handle = fopen($log_file, 'a')) {
+		fwrite($file_handle, $log_entry);
+		fclose($file_handle);
+	}
 }

@@ -1,0 +1,4 @@
+FAILED - 2023-10-26 10:53:47 - Success: False	User: murid12	Course: Mengoperasikan dan Mengolah Kata Menggunakan Microsoft Word bagi Pegawai Kantor Umum	Message: Unauthorized 
+FAILED - 2023-10-26 10:54:11 - Success: False	User: murid12	Course: Mengoperasikan dan Mengolah Kata Menggunakan Microsoft Word bagi Pegawai Kantor Umum	Message: Unauthorized 
+FAILED - 2023-10-26 10:58:01 - Success: False	User: murid12	Course: Video Motion Grafis di After Effect (Daring)	Message: Unauthorized 
+FAILED - 2023-10-26 10:58:12 - Success: False	User: murid12	Course: Desain 3D Exterior Rumah dengan Sketchup	Message: Unauthorized 

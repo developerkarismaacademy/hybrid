@@ -16,9 +16,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |--------------------------------------------------------------------------
 | WARNING: You MUST set this value!
 */
-// $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$config['base_url'] = "https";
-$config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
+$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+//$config['base_url'] = "https";
+$config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
 $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 // $config['base_url'] = "localhost/kursusonline-new";
 
@@ -39,7 +39,7 @@ $config['index_page'] = '';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol'] = 'REQUEST_URI';
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ $config['url_suffix'] = '';
 | Default Language
 |--------------------------------------------------------------------------
 */
-$config['language']	= 'indonesian';
+$config['language'] = 'indonesian';
 
 /*
 |--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ $config['log_threshold'] = 0;
 | Error Logging Directory Path
 |--------------------------------------------------------------------------
 */
-$config['log_path'] = '';
+$config['log_path'] = 'logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -130,7 +130,7 @@ $config['log_path'] = '';
 |--------------------------------------------------------------------------
 | Note: Leaving it blank will default to 'php'.
 */
-$config['log_file_extension'] = '';
+$config['log_file_extension'] = 'txt';
 
 /*
 |--------------------------------------------------------------------------
@@ -194,11 +194,11 @@ $config['sess_regenerate_destroy'] = false;
 | Cookie Related Variables
 |--------------------------------------------------------------------------
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= false;
-$config['cookie_httponly'] 	= false;
+$config['cookie_prefix'] = '';
+$config['cookie_domain'] = '';
+$config['cookie_path'] = '/';
+$config['cookie_secure'] = false;
+$config['cookie_httponly'] = false;
 
 /*
 |--------------------------------------------------------------------------
